@@ -1,0 +1,138 @@
+.ant-tabs {
+  width: 100%;
+  margin: 3px;
+}
+
+.ant-tabs-nav-wrap {
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-tabs-tab-btn{
+  padding: 0 2px;
+  text-align: center;
+}
+
+.create_input_container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  height: 60px;
+  padding: 5px 2px;
+}
+.other_options {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  font-size: 15px;
+  padding: 5px 2px;
+}
+.create_new_container {
+  border: 1px solid rgb(197, 197, 197);
+  background-color: rgb(235, 235, 235);
+  margin: auto;
+  padding: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+.create_input_container .ant-input {
+  border-radius: 50px;;
+  height: 50px;
+  width: 85%;
+  margin-right: 5px;
+  cursor: pointer
+}
+.create_input_container .avatar {
+  width: 50px; 
+  height: 50px; 
+  margin: auto; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.feeds_container {
+  margin: auto;
+  padding: 0px 10px;
+  width: 100%
+}
+.feeds_dropdown_bg {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+}
+.feeds_dropdown {
+  position: absolute !important;
+  right: 5px;
+  top: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none;
+}
+.divider {
+  padding: -10px;
+  margin: -10px;
+}
+
+.poll_names_not_voted {
+  cursor: pointer;
+  margin: 5px;
+  width: 100%;
+  height: 25px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid rgb(112, 112, 112);
+}
+.poll_names_voted_con {
+  width: 100%;
+  height: 25px;
+  position: relative;
+  border: 1px solid rgb(112, 112, 112);
+  border-radius: 5px;
+   margin: 5px;
+}
+.poll_names_voted{
+  position: absolute;
+  background-color: #707e8a;
+  height: 23px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+}
+.poll_names_con {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.poll_names_voted_con h4 {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+}
+.poll_names_voted_con h5 {
+  position: absolute;
+  text-align: right;
+  right: 10px;
+  top: 3px;
+}
+
+@media (max-width: 767 ) {
+  .other_options {
+    font-size: 12px;
+  }
+  .create_new_container {
+    width: 98%;
+  }
+  .ant-tabs-nav-wrap {
+    width: 70%;  
+  }
+  .feeds_container {
+    padding-top: 10px;
+  }
+}

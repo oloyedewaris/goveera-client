@@ -1,0 +1,174 @@
+@import "~antd/dist/antd.less";
+
+a {
+  color: rgba(0, 0, 0, 0.7.5) !important;
+}
+
+.profile_pic {
+  margin: 10px auto;
+}
+.body {
+  min-height: 70vh;
+  margin-top: 15px;
+  padding: 0 3rem;
+  padding-bottom: 3vh;
+  margin-bottom: 3vh;
+}
+.loader {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+.previous_loader {
+  height: 100vh;
+}
+.no_user_found {
+  text-align: center;
+  margin-top: 20px;
+}
+.search_bar {
+  margin: auto;
+  margin-bottom: 0px;
+  width: 80%;
+}
+.search_con {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.ant-modal-footer {
+  display: none !important;
+}
+
+/* About Page */
+.about-image {
+  display: flex;
+  justify-content: center;
+  width: 30vh;
+  height: 30vh;
+  margin: 15px;
+}
+/* Posts */
+.post-button {
+  margin-left: 5;
+}
+.posts-list {
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+.post-button {
+  margin: 10px;
+}
+.post-in-list {
+  width: 100%;
+  word-wrap: break-word;
+}
+.center_card {
+  text-align: center;
+}
+.center_card_discover {
+  text-align: center;
+  height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Discover */
+
+.discover-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.center-avatar {
+  display: inline-block;
+  text-align: center;
+}
+/* Settings */
+.settings-space {
+  margin: 5px;
+}
+.settings-container {
+  margin: 10px;
+}
+/* Create */
+.create-post {
+  padding: 15px;
+  margin: 10px;
+  width: 60%;
+  display: inline-block;
+  text-align: center;
+}
+.tabs {
+  margin: 0 30%;
+  display: inline-block;
+  text-align: center;
+}
+
+.layout_content {
+  margin: 15px 20px;
+}
+.time_ago {
+  margin-top: 15px;
+  font-size: 9px;
+  text-align: left;
+}
+
+.app_spinner_container {
+  height: 100vh;
+}
+
+.load_more {
+  margin: 10px;
+}
+
+.large_user_card {
+  margin: 0 10px;
+}
+
+/* changing component based on screen size */
+@media screen and (min-width: 768px) {
+  .small_comp_con {
+    display: none;
+  }
+}
+@media screen and (max-width: 767px) {
+  .large_comp_con {
+    display: none;
+  }
+  .small_comp_con {
+    padding: 5px;
+  }
+  .search_con {
+    margin-bottom: 10px;
+  }
+}
+
+/* other media queries */
+@media screen and (max-width: 1000px) {
+  .body {
+    padding: 0 1rem;
+  }
+}
+@media screen and (max-width: 767px) {
+  .body {
+    padding: 0 0.5rem;
+  }
+}
+@media screen and (max-width: 450px) {
+  .body {
+    padding: 0;
+    width: 100%;
+  }
+  .img-container {
+    display: none;
+  }
+  .create-post {
+    width: 85%;
+  }
+  .search_bar {
+    width: 95%;
+  }
+}

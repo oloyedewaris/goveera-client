@@ -1,0 +1,63 @@
+{
+  "name": "goveera",
+  "version": "1.0.0",
+  "description": "a project management app",
+  "private": true,
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
+  },
+  "author": "waris",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "@craco/craco": "^6.4.0",
+    "antd": "^4.15.5",
+    "antd-img-crop": "^3.16.0",
+    "axios": "^0.21.1",
+    "core-js": "^3.12.1",
+    "craco-less": "^1.20.0",
+    "customize-cra": "^1.0.0",
+    "form-data": "^4.0.0",
+    "javascript-time-ago": "^2.3.5",
+    "react": "^17.0.2",
+    "react-app-polyfill": "^2.0.0",
+    "react-css-theme-switcher": "^0.3.0",
+    "react-dom": "^17.0.2",
+    "react-loader-spinner": "^4.0.0",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "react-spring": "^9.3.2",
+    "redux": "^4.1.0",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:5000/",
+  "devDependencies": {
+    "autoprefixer": "^10.2.6",
+    "gulp": "^4.0.2",
+    "gulp-csso": "^4.0.1",
+    "gulp-debug": "^4.0.0",
+    "gulp-less": "^5.0.0",
+    "gulp-postcss": "^9.0.0",
+    "less-plugin-npm-import": "^2.1.0"
+  }
+}
