@@ -4,6 +4,7 @@ import { UserOutlined } from "@ant-design/icons"
 import axios from "axios";
 import { Link } from "react-router-dom"
 import { tokenConfig } from '../../redux/actions/authActions'
+import truncString from '../../util/truncString'
 
 const Discover = () => {
   const { Meta } = Card;
@@ -45,17 +46,13 @@ const Discover = () => {
           {users.length > 0 ? (
             <Row gutter={[16, 16]} justify='center' align='middle'>
               {users.map((user, i) => {
-                const introMessage = `${user.position} at ${user.company.name}`
-                const truncMessage = `${user.position} at ${user.company.name}`.substring(0, 37).concat('...')
                 return (
                   <Col key={i} xs={12} sm={8} md={12} lg={8}>
                     <Link to={`/profile/${user._id}`}>
                       <Card className="center_card_discover" hoverable>
                         <p><Avatar icon={!user.image && <UserOutlined />} className="center-avatar" size={70} src={user.image} /></p>
-                        <Meta title={`${user.firstName} ${user.lastName}`} description={user.email} />
-                        <p style={{ marginTop: '5px auto' }}>{
-                          introMessage.length < 40 ? introMessage : truncMessage
-                        }</p>
+                        <Meta title={truncString(`${user.firstName} ${user.lastName}`, 12)} description={truncString(user.email, 15)} />
+                        <p style={{ marginTop: '5px auto' }}>{truncString(user.position, 23)}</p>
                       </Card>
                     </Link>
                   </Col>

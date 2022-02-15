@@ -61,6 +61,7 @@ function Notifications() {
             }
             return (
               <div style={{ backgroundColor: getColor(notification.viewed), margin: 5, padding: 5, borderRadius: 3 }}>
+                {console.log(notification.link)}
                 <Link to={notification.link}>
                   <List.Item key={i}>
                     <List.Item.Meta

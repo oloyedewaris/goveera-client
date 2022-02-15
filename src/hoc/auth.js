@@ -23,7 +23,7 @@ function Auth(Component) {
     } else if (isAuthenticated && !user.company) {
       return <>{history.push("/register/company")}</>;
     } else if (!token) {
-      return <>{history.push("/")}</>;
+      return <>{history.push("/login")}</>;
     } else {
       return <Spinner />;
     }

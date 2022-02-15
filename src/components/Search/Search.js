@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { AutoComplete, Input } from 'antd';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { tokenConfig } from '../../redux/actions/authActions'
 
 const Search = () => {
   const history = useHistory()
-  const auth = useSelector(state => state.auth)
   const [value, setValue] = useState('');
   const [options, setOptions] = useState([]);
   const [users, setUsers] = useState([]);
