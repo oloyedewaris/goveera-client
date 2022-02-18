@@ -31,7 +31,7 @@ const RegisterUser = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    axios.get("/api/company/get_all_companies")
+    axios.get("https://goveera-server.herokuapp.com/api/company/get_all_companies")
       .then(res => setCompanies(res.data))
       .catch(err => alert("Can't get companies"))
   }, []);

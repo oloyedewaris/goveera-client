@@ -20,7 +20,7 @@ const Search = () => {
 
   const onSearch = (data) => {
     setValue(data);
-    axios.get(`/api/users/search?text=${data}`, tokenConfig())
+    axios.get(`https://goveera-server.herokuapp.com/api/users/search?text=${data}`, tokenConfig())
       .then(res => {
         const users = res.data.map(user => ({ value: `${user.firstName} ${user.lastName}` }))
         setUsers(res.data)

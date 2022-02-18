@@ -19,7 +19,7 @@ const Discover = () => {
   }, [limit]);
 
   const getUsers = (limit) => {
-    axios.get(`/api/users?limit=${limit}`, tokenConfig())
+    axios.get(`https://goveera-server.herokuapp.com/api/users?limit=${limit}`, tokenConfig())
       .then(res => {
         setUsers(res.data.users)
         setCount(res.data.count)

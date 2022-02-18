@@ -18,7 +18,7 @@ import { tokenConfig } from "./authActions";
 export const getProjects = () => (dispatch, getState) => {
   dispatch({ type: GETTING_PROJECTS });
   axios
-    .get("/api/projects", tokenConfig())
+    .get("https://goveera-server.herokuapp.com/api/projects", tokenConfig())
     .then(res => dispatch({ type: GET_PROJECTS, payload: res.data }))
     .catch(err => {
       if (err.response)
@@ -32,7 +32,7 @@ export const getProjects = () => (dispatch, getState) => {
 export const createProject = body => (dispatch, getState) => {
   dispatch({ type: CREATING_PROJECT });
   axios
-    .post("/api/projects", body, tokenConfig())
+    .post("https://goveera-server.herokuapp.com/api/projects", body, tokenConfig())
     .then(res =>
       dispatch({
         type: CREATE_PROJECT,
@@ -65,7 +65,7 @@ export const updateProject = ({ projectId, action, stage, taskName }) => (
   const body = { action, stage, taskName };
 
   axios
-    .patch(`/api/projects/${projectId}`, body, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/projects/${projectId}`, body, tokenConfig())
     .then(res =>
       dispatch({
         type: UPDATE_PROJECT,
@@ -92,7 +92,7 @@ export const addComment = ({ projectId, action, commenterId, text }) => (
   const body = { action, commenterId, text };
 
   axios
-    .patch(`/api/projects/${projectId}`, body, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/projects/${projectId}`, body, tokenConfig())
     .then(res =>
       dispatch({
         type: ADD_PROJECT_COMMENT,
@@ -118,7 +118,7 @@ export const deleteComment = ({ projectId, commentId, action }) => (
   const body = { action, commentId };
 
   axios
-    .patch(`/api/projects/${projectId}`, body, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/projects/${projectId}`, body, tokenConfig())
     .then(res =>
       dispatch({
         type: DELETE_PROJECT_COMMENT,
@@ -139,7 +139,7 @@ export const deleteComment = ({ projectId, commentId, action }) => (
 
 export const deleteProject = projectId => (dispatch, getState) => {
   axios
-    .delete(`/api/projects/${projectId}`, tokenConfig())
+    .delete(`https://goveera-server.herokuapp.com/api/projects/${projectId}`, tokenConfig())
     .then(res =>
       dispatch({
         type: DELETE_PROJECT,

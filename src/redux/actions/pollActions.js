@@ -19,7 +19,7 @@ import { tokenConfig } from "./authActions";
 export const getPolls = () => (dispatch, getState) => {
   dispatch({ type: GETTING_POLLS });
   axios
-    .get("/api/polls", tokenConfig())
+    .get("https://goveera-server.herokuapp.com/api/polls", tokenConfig())
     .then(res =>
       dispatch({
         type: GET_POLLS,
@@ -46,7 +46,7 @@ export const createPoll = body => (dispatch, getState) => {
   dispatch({ type: CREATING_POLL });
 
   axios
-    .post("/api/polls", body, tokenConfig())
+    .post("https://goveera-server.herokuapp.com/api/polls", body, tokenConfig())
     .then(res =>
       dispatch({
         type: CREATE_POLL,
@@ -74,7 +74,7 @@ export const updatePoll = ({ pollId, optionName, action }) => (dispatch, getStat
   const body = { optionName, action };
 
   axios
-    .patch(`/api/polls/${pollId}`, body, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/polls/${pollId}`, body, tokenConfig())
     .then(res =>
       dispatch({
         type: UPDATE_POLL,
@@ -98,7 +98,7 @@ export const addComment = (pollId, action, commenterId, text) => (dispatch, getS
   const body = { action, commenterId, text };
 
   axios
-    .patch(`/api/polls/${pollId}`, body, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/polls/${pollId}`, body, tokenConfig())
     .then(res =>
       dispatch({
         type: ADD_COMMENT,
@@ -124,7 +124,7 @@ export const deleteComment = (pollId, commentId, action) => (
   const body = { action, commentId };
 
   axios
-    .patch(`/api/polls/${pollId}`, body, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/polls/${pollId}`, body, tokenConfig())
     .then(res =>
       dispatch({
         type: DELETE_COMMENT,
@@ -145,7 +145,7 @@ export const deleteComment = (pollId, commentId, action) => (
 
 export const deletePoll = pollId => (dispatch, getState) => {
   axios
-    .delete(`/api/polls/${pollId}`, tokenConfig())
+    .delete(`https://goveera-server.herokuapp.com/api/polls/${pollId}`, tokenConfig())
     .then(res =>
       dispatch({
         type: DELETE_POLL,

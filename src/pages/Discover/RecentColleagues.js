@@ -13,7 +13,7 @@ const Colleagues = () => {
   const [colleaguesLoading, setColleaguesLoading] = useState(false)
 
   const getColleagues = useCallback(() => {
-    axios.get(`/api/users/colleagues/limit`, tokenConfig())
+    axios.get(`https://goveera-server.herokuapp.com/api/users/colleagues/limit`, tokenConfig())
       .then(res => {
         setColleagues(res.data)
         setColleaguesLoading(false)
@@ -30,7 +30,7 @@ const Colleagues = () => {
   }, [getColleagues]);
 
   const handleRemove = (userId) => {
-    axios.delete(`/api/users?userId=${userId}`, tokenConfig())
+    axios.delete(`https://goveera-server.herokuapp.com/api/users?userId=${userId}`, tokenConfig())
       .then(res => {
         if (res.data.deleted)
           getColleagues();

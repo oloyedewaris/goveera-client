@@ -20,7 +20,7 @@ const Profile = () => {
 
   useEffect(() => {
     setLoading(true)
-    axios.get(`/api/users/${userId}`, tokenConfig())
+    axios.get(`https://goveera-server.herokuapp.com/api/users/${userId}`, tokenConfig())
       .then(res => {
         setUser(res.data)
         setLoading(false)

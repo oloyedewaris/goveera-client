@@ -32,7 +32,7 @@ export const tokenConfig = () => {
 // get user's data
 export const getUser = () => dispatch => {
   dispatch({ type: USER_LOADING });
-  axios.get("/api/auth/authenticate", tokenConfig())
+  axios.get("https://goveera-server.herokuapp.com/api/auth/authenticate", tokenConfig())
     .then((res) => {
       dispatch(clearErrors());
       console.log(res.data)
@@ -52,7 +52,7 @@ export const getUser = () => dispatch => {
 //Log user in
 export const login = body => dispatch => {
   axios
-    .post("/api/auth/login", body)
+    .post("https://goveera-server.herokuapp.com/api/auth/login", body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -76,7 +76,7 @@ export const login = body => dispatch => {
 export const register = body => dispatch => {
 
   axios
-    .post("/api/auth/register", body)
+    .post("https://goveera-server.herokuapp.com/api/auth/register", body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -99,7 +99,7 @@ export const register = body => dispatch => {
 // Register company
 export const registerCompany = body => dispatch => {
   axios
-    .post("/api/company/create_company", body)
+    .post("https://goveera-server.herokuapp.com/api/company/create_company", body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -118,7 +118,7 @@ export const registerCompany = body => dispatch => {
 //clear notifications
 export const clearNotifications = () => (dispatch, getState) => {
   axios
-    .get("/api/users/clear_notifications", tokenConfig())
+    .get("https://goveera-server.herokuapp.com/api/users/clear_notifications", tokenConfig())
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -133,7 +133,7 @@ export const clearNotifications = () => (dispatch, getState) => {
 
 export const saveItem = data => dispatch => {
   axios
-    .post("/api/users/save", data, tokenConfig())
+    .post("https://goveera-server.herokuapp.com/api/users/save", data, tokenConfig())
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -152,7 +152,7 @@ export const changeSettings = data => dispatch => {
   const body = { bio, email, firstName, lastName, password, newPassword, profilePic }
 
   axios
-    .post(`/api/users/${userId}?type=${type}`, body, tokenConfig())
+    .post(`https://goveera-server.herokuapp.com/api/users/${userId}?type=${type}`, body, tokenConfig())
     .then((res) => {
       dispatch({
         type: CHANGE_SETTINGS,

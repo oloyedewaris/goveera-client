@@ -18,7 +18,7 @@ import { tokenConfig } from "./authActions";
 export const getPosts = () => (dispatch, getState) => {
   dispatch({ type: GETTING_POSTS });
   axios
-    .get("/api/posts", tokenConfig())
+    .get("https://goveera-server.herokuapp.com/api/posts", tokenConfig())
     .then(res =>
       dispatch({
         type: GET_POSTS,
@@ -44,7 +44,7 @@ export const createPost = body => (dispatch, getState) => {
   dispatch({ type: CREATING_POST });
 
   axios
-    .post("/api/posts", body, tokenConfig())
+    .post("https://goveera-server.herokuapp.com/api/posts", body, tokenConfig())
     .then(res =>
       dispatch({
         type: CREATE_POST,
@@ -76,7 +76,7 @@ export const updatePostLikes = ({ postId, action }) => (
   });
 
   axios
-    .patch(`/api/posts/${postId}`, { action }, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/posts/${postId}`, { action }, tokenConfig())
     .then(res =>
       dispatch({
         type: UPDATE_POST_LIKES,
@@ -99,7 +99,7 @@ export const addComment = (postId, action, commenterId, text) => (dispatch, getS
   const body = { action, commenterId, text };
 
   axios
-    .patch(`/api/posts/${postId}`, body, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/posts/${postId}`, body, tokenConfig())
     .then(res =>
       dispatch({
         type: ADD_COMMENT,
@@ -125,7 +125,7 @@ export const deleteComment = (postId, commentId, action) => (
   const body = { action, commentId };
 
   axios
-    .patch(`/api/posts/${postId}`, body, tokenConfig())
+    .patch(`https://goveera-server.herokuapp.com/api/posts/${postId}`, body, tokenConfig())
     .then(res =>
       dispatch({
         type: DELETE_COMMENT,
@@ -146,7 +146,7 @@ export const deleteComment = (postId, commentId, action) => (
 
 export const deletePost = postId => (dispatch, getState) => {
   axios
-    .delete(`/api/posts/${postId}`, tokenConfig())
+    .delete(`https://goveera-server.herokuapp.com/api/posts/${postId}`, tokenConfig())
     .then(res =>
       dispatch({
         type: DELETE_POST,

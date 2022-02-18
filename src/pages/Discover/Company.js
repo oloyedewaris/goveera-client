@@ -17,7 +17,7 @@ const Company = () => {
   const [colleaguesLoading, setColleaguesLoading] = useState(false)
 
   const getColleagues = (limit) => {
-    axios.get(`/api/users/colleagues?limit=${limit}`, tokenConfig())
+    axios.get(`https://goveera-server.herokuapp.com/api/users/colleagues?limit=${limit}`, tokenConfig())
       .then(res => {
         setColleagues(res.data.users)
         setCount(res.data.count)
@@ -35,7 +35,7 @@ const Company = () => {
   }, [limit]);
 
   const handleRemove = (userId) => {
-    axios.delete(`/api/users?userId=${userId}`, tokenConfig())
+    axios.delete(`https://goveera-server.herokuapp.com/api/users?userId=${userId}`, tokenConfig())
       .then(res => {
         if (res.data.deleted)
           getColleagues();
