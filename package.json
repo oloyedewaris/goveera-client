@@ -50,7 +50,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000/",
+  "proxy": " https://goveera-server.herokuapp.com/",
   "devDependencies": {
     "autoprefixer": "^10.2.6",
     "gulp": "^4.0.2",
