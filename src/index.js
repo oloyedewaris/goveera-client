@@ -5,10 +5,10 @@ import { Provider } from "react-redux";
 import store from "./store";
 import App from "./App";
 import "./index.less";
-import { register } from "./serviceWorker";
-import "react-app-polyfill/ie11";
-import "react-app-polyfill/ie9";
-import "core-js";
+import * as serviceWorker from "./serviceWorker";
+// import "react-app-polyfill/ie11";
+// import "react-app-polyfill/ie9";
+// import "core-js";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -24,4 +24,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-register();
+serviceWorker.unregister();
