@@ -54,9 +54,7 @@ const ProjectsFeed = () => {
             ) : (
               <List
                 itemLayout="vertical"
-                pagination={{
-                  pageSize: 5,
-                }}
+                pagination={{ pageSize: 5 }}
                 dataSource={projects}
                 renderItem={(project, i) => {
                   return (
@@ -124,7 +122,7 @@ const ProjectsFeed = () => {
                         description={
                           <div className="post-in-list">
                             <p>{project.description}</p>
-                            <p className="time_ago">{timeAgo.format(project.postedTime)}</p>
+                            <p className="time_ago">{timeAgo.format(project.postedTime, 'twitter-now')}</p>
                           </div>
                         }
                       />

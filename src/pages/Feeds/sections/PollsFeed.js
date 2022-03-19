@@ -75,7 +75,7 @@ const PollsFeed = () => {
             ) : (
               <List
                 itemLayout="vertical"
-                pagination={{ pageSize: 5 }}
+                pagination={{ pageSize: 8 }}
                 dataSource={polls}
                 renderItem={(poll, i) => {
                   return (
@@ -155,7 +155,7 @@ const PollsFeed = () => {
                                 </div>
                               )
                             })}
-                            <p className="time_ago">{timeAgo.format(poll.postedTime)}</p>
+                            <p className="time_ago">{timeAgo.format(poll.postedTime, 'twitter-now')}</p>
                           </div>
                         } />
                       <div>

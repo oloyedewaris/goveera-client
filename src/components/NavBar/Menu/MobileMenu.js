@@ -24,7 +24,7 @@ const MobileMenu = () => {
             <BellOutlined className="nav_menu_icon" />
           </NavLink>
         </Badge>
-        <NavLink exact activeClassName='nav_active_color' className='menu_item' to="/company">
+        <NavLink exact activeClassName='nav_active_color' className='menu_item' to="/colleagues">
           <UsergroupAddOutlined className="nav_menu_icon" />
         </NavLink>
         <NavLink exact activeClassName='nav_active_color' className='menu_item' to="/discover">

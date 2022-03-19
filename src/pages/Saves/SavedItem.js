@@ -20,7 +20,7 @@ function SavedItem() {
       {Items ?
         <List
           itemLayout="vertical"
-          pagination={{ pageSize: 4 }}
+          pagination={{ pageSize: 8 }}
           dataSource={Items}
           renderItem={(item, i) => {
             const style = { fontSize: '30px' }
@@ -48,7 +48,7 @@ function SavedItem() {
                       title={item.type}
                       description={item.title}
                     />
-                    <p style={{ margin: "auto 10px" }}>{timeAgo.format(item.time)}</p>
+                    <p style={{ margin: "auto 10px" }}>{timeAgo.format(item.time, 'twitter-now')}</p>
                   </List.Item>
                 </Link>
               </div>

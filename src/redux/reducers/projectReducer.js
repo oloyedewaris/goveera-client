@@ -9,7 +9,8 @@ import {
   DELETE_PROJECT_COMMENT,
   DELETE_PROJECT,
   UPDATING_PROJECT,
-  UPDATE_PROJECT
+  UPDATE_PROJECT,
+  RESET_CREATED
 } from "../actions/types";
 
 const initialState = {
@@ -36,7 +37,7 @@ export default function reducer(state = initialState, action) {
         projectLoading: false,
         projectLoaded: true,
         projectCreated: false,
-        projects: action.payload
+        projects: action.payload.projects
       };
     case GET_PROJECTS_FAILED:
       return {
@@ -54,7 +55,7 @@ export default function reducer(state = initialState, action) {
     case CREATE_PROJECT:
       return {
         ...state,
-        projects: action.payload,
+        projects: action.payload.projects,
         projectCreated: true,
         projectCreating: false
       };
@@ -64,6 +65,11 @@ export default function reducer(state = initialState, action) {
         projectCreated: false,
         projectCreating: false
       };
+    case RESET_CREATED:
+      return {
+        ...state,
+        projectCreated: false
+      }
     case UPDATING_PROJECT:
       return {
         ...state,
@@ -73,22 +79,22 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         updatingProjectLike: false,
-        projects: action.payload
+        projects: action.payload.projects
       };
     case ADD_PROJECT_COMMENT:
       return {
         ...state,
-        projects: action.payload
+        projects: action.payload.projects
       };
     case DELETE_PROJECT_COMMENT:
       return {
         ...state,
-        projects: action.payload
+        projects: action.payload.projects
       };
     case DELETE_PROJECT:
       return {
         ...state,
-        projects: action.payload
+        projects: action.payload.projects
       };
     default:
       return state;

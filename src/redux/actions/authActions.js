@@ -1,7 +1,5 @@
 import {
-  USER_LOADING,
   SET_USER,
-  SET_USER_FAILED,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
@@ -13,46 +11,22 @@ import {
   CLEAR_NOTIFICATIONS,
   SAVE_ITEM
 } from "./types";
-import axios from "axios";
+import axiosInstance from "../../util/axiosInstance";
 import { getErrors, clearErrors } from "./errorActions";
 
-export const tokenConfig = () => {
-  const token = localStorage.getItem('token')
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  if (token) {
-    config.headers["x-auth-token"] = token;
-  }
-  return config;
-};
 
-// get user's data
-export const getUser = () => dispatch => {
-  dispatch({ type: USER_LOADING });
-  axios.get("https://goveera-server.herokuapp.com/api/auth/authenticate", tokenConfig())
-    .then((res) => {
-      dispatch(clearErrors());
-      console.log(res.data)
-      dispatch({
-        type: SET_USER,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      if (err.response) {
-        dispatch(getErrors(err.response.data, err.response.status, "SET_USER_FAILED"));
-        dispatch({ type: SET_USER_FAILED });
-      }
-    });
+// get user
+export const setUser = data => dispatch => {
+  dispatch({
+    type: SET_USER,
+    payload: data,
+  });
 };
 
 //Log user in
 export const login = body => dispatch => {
-  axios
-    .post("https://goveera-server.herokuapp.com/api/auth/login", body)
+  axiosInstance
+    .post("/api/auth/login", body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -75,8 +49,8 @@ export const login = body => dispatch => {
 //Register User
 export const register = body => dispatch => {
 
-  axios
-    .post("https://goveera-server.herokuapp.com/api/auth/register", body)
+  axiosInstance
+    .post("/api/auth/register", body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -98,8 +72,8 @@ export const register = body => dispatch => {
 
 // Register company
 export const registerCompany = body => dispatch => {
-  axios
-    .post("https://goveera-server.herokuapp.com/api/company/create_company", body)
+  axiosInstance
+    .post("/api/company/create_company", body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -117,8 +91,8 @@ export const registerCompany = body => dispatch => {
 
 //clear notifications
 export const clearNotifications = () => (dispatch, getState) => {
-  axios
-    .get("https://goveera-server.herokuapp.com/api/users/clear_notifications", tokenConfig())
+  axiosInstance
+    .get("/api/users/clear_notifications")
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -132,8 +106,8 @@ export const clearNotifications = () => (dispatch, getState) => {
 }
 
 export const saveItem = data => dispatch => {
-  axios
-    .post("https://goveera-server.herokuapp.com/api/users/save", data, tokenConfig())
+  axiosInstance
+    .post("/api/users/save", data)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -151,8 +125,8 @@ export const changeSettings = data => dispatch => {
   const { userId, bio, email, firstName, lastName, password, newPassword, type, profilePic } = data
   const body = { bio, email, firstName, lastName, password, newPassword, profilePic }
 
-  axios
-    .post(`https://goveera-server.herokuapp.com/api/users/${userId}?type=${type}`, body, tokenConfig())
+  axiosInstance
+    .post(`/api/users/${userId}?type=${type}`, body)
     .then((res) => {
       dispatch({
         type: CHANGE_SETTINGS,

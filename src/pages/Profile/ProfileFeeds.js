@@ -55,7 +55,7 @@ const ProfileFeeds = ({ user }) => {
             ) : (
               <List
                 itemLayout="vertical"
-                pagination={{ pageSize: 4 }}
+                pagination={{ pageSize: 8 }}
                 dataSource={filteredPost}
                 renderItem={(post, i) => (
                   <List.Item
@@ -105,7 +105,7 @@ const ProfileFeeds = ({ user }) => {
                       description={
                         <div className="post-in-list">
                           {post.text}
-                          <p className="time_ago">{timeAgo.format(post.postedTime)}</p>
+                          <p className="time_ago">{timeAgo.format(post.postedTime, 'twitter-now')}</p>
                         </div>
                       }
                     />

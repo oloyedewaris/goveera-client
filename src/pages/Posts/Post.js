@@ -66,10 +66,8 @@ const Post = () => {
 
   return (
     <div>
-      <div style={{ margin: "5px 10px" }}>
-        <Link to="/home?tab=post">
-          <ArrowLeftOutlined />
-        </Link>
+      <div onClick={() => history.goBack()} style={{ margin: "5px" }}>
+        <ArrowLeftOutlined />
       </div>
       {transition((style, item) =>
         item && <animated.div style={style}>
@@ -126,7 +124,7 @@ const Post = () => {
                   description={
                     <div className="post-in-list">
                       {post.text}
-                      <p className="time_ago">{timeAgo.format(post.postedTime)}</p>
+                      <p className="time_ago">{timeAgo.format(post.postedTime, 'twitter-now')}</p>
                     </div>
                   }
                 />

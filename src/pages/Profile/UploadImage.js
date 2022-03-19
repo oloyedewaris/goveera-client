@@ -49,7 +49,7 @@ const UploadImage = ({ onClose }) => {
   const submit = () => {
     setError(null)
     if (!password || !imageUrl) {
-      setError('Enter your password')
+      setError('Choose an image and enter password')
     } else {
       const data = {
         userId: user._id,
@@ -80,7 +80,7 @@ const UploadImage = ({ onClose }) => {
           type='password'
           placeholder='Enter your password'
           onChange={onPassword}
-          enterButton="Upload picture"
+          enterButton="Upload"
           onSearch={submit}
         />
       </Space>

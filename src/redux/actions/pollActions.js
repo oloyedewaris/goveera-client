@@ -9,17 +9,16 @@ import {
   UPDATING_POLL,
   ADD_COMMENT,
   DELETE_COMMENT,
-  UPDATE_POLL
+  UPDATE_POLL,
+  RESET_CREATED
 } from "../actions/types";
-
-import axios from "axios";
+import axiosInstance from "../../util/axiosInstance";
 import { getErrors } from "./errorActions";
-import { tokenConfig } from "./authActions";
 
-export const getPolls = () => (dispatch, getState) => {
+export const getPolls = () => (dispatch) => {
   dispatch({ type: GETTING_POLLS });
-  axios
-    .get("https://goveera-server.herokuapp.com/api/polls", tokenConfig())
+  axiosInstance
+    .get("/api/polls")
     .then(res =>
       dispatch({
         type: GET_POLLS,
@@ -42,11 +41,11 @@ export const getPolls = () => (dispatch, getState) => {
     });
 };
 
-export const createPoll = body => (dispatch, getState) => {
+export const createPoll = body => (dispatch) => {
   dispatch({ type: CREATING_POLL });
 
-  axios
-    .post("https://goveera-server.herokuapp.com/api/polls", body, tokenConfig())
+  axiosInstance
+    .post("/api/polls", body)
     .then(res =>
       dispatch({
         type: CREATE_POLL,
@@ -69,12 +68,16 @@ export const createPoll = body => (dispatch, getState) => {
     });
 };
 
-export const updatePoll = ({ pollId, optionName, action }) => (dispatch, getState) => {
+export const resetCreated = () => (dispatch) => {
+  dispatch({ type: RESET_CREATED });
+};
+
+export const updatePoll = ({ pollId, optionName, action }) => (dispatch) => {
   dispatch({ type: UPDATING_POLL });
   const body = { optionName, action };
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/polls/${pollId}`, body, tokenConfig())
+  axiosInstance
+    .patch(`/api/polls/${pollId}`, body)
     .then(res =>
       dispatch({
         type: UPDATE_POLL,
@@ -93,12 +96,11 @@ export const updatePoll = ({ pollId, optionName, action }) => (dispatch, getStat
     });
 };
 
-
-export const addComment = (pollId, action, commenterId, text) => (dispatch, getState) => {
+export const addComment = (pollId, action, commenterId, text) => (dispatch) => {
   const body = { action, commenterId, text };
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/polls/${pollId}`, body, tokenConfig())
+  axiosInstance
+    .patch(`/api/polls/${pollId}`, body)
     .then(res =>
       dispatch({
         type: ADD_COMMENT,
@@ -117,14 +119,11 @@ export const addComment = (pollId, action, commenterId, text) => (dispatch, getS
     });
 };
 
-export const deleteComment = (pollId, commentId, action) => (
-  dispatch,
-  getState
-) => {
+export const deleteComment = (pollId, commentId, action) => (dispatch) => {
   const body = { action, commentId };
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/polls/${pollId}`, body, tokenConfig())
+  axiosInstance
+    .patch(`/api/polls/${pollId}`, body)
     .then(res =>
       dispatch({
         type: DELETE_COMMENT,
@@ -143,9 +142,9 @@ export const deleteComment = (pollId, commentId, action) => (
     });
 };
 
-export const deletePoll = pollId => (dispatch, getState) => {
-  axios
-    .delete(`https://goveera-server.herokuapp.com/api/polls/${pollId}`, tokenConfig())
+export const deletePoll = pollId => (dispatch) => {
+  axiosInstance
+    .delete(`/api/polls/${pollId}`)
     .then(res =>
       dispatch({
         type: DELETE_POLL,

@@ -1,34 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router";
-import { getUser } from "../redux/actions/authActions";
+import { Redirect } from "react-router";
+import { setUser } from "../redux/actions/authActions";
 import Spinner from "../components/Spinner/Spinner";
+import axiosInstance from "../util/axiosInstance";
 
 function Auth(Component) {
   const AuthCheck = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const [loading, setLoading] = useState(true)
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const user = useSelector((state) => state.auth.user);
     const token = localStorage.getItem('token')
 
-    useEffect(() => {
-      if (!isAuthenticated) {
-        dispatch(getUser());
-      }
-    }, [dispatch, isAuthenticated]);
 
-    if (isAuthenticated && user.company) {
-      return <Component />;
-    } else if (isAuthenticated && !user.company) {
-      return <>{history.push("/register/company")}</>;
-    } else if (!token) {
-      return <>{history.push("/login")}</>;
-    } else {
-      return <Spinner />;
-    }
-  };
-  return AuthCheck;
-}
+    useEffect(() => {
+      if (!isAuthenticated && token) {
+        setLoading(true)
+        axiosInstance.get("/api/auth/authenticate")
+          .then(res => {
+            console.log('res.data', res.data)
+            if (res.data) {
+              setLoading(val => {
+                dispatch(setUser(res.data))
+                return false
+              })
+            }
+          }).catch(err => {
+            localStorage.removeItem('token')
+            setLoading(false)
+          })
+      } else setLoading(false)
+    }, [dispatch, isAuthenticated, token])
+
+    return (
+      <>
+        {loading ?
+          <Spinner />
+          : <>{isAuthenticated ?
+            <>
+              {isAuthenticated && user.role === 1 && !user.company ?
+                <>
+                  <Redirect to='/register/company' />
+                </>
+                : <Component />}
+            </>
+            : <Redirect to='/login' />}
+          </>}
+      </>
+    )
+  }
+  return AuthCheck
+};
 
 export default Auth;

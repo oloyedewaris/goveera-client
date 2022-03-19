@@ -1,7 +1,5 @@
 import {
-  USER_LOADING,
   SET_USER,
-  SET_USER_FAILED,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
@@ -17,21 +15,14 @@ import {
 const initialState = {
   token: null,
   isAuthenticated: false,
-  userLoading: false,
   user: null,
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case USER_LOADING:
-      return {
-        ...state,
-        userLoading: true
-      }
     case SET_USER:
       return {
         ...state,
-        userLoading: false,
         isAuthenticated: true,
         user: action.payload.user
       };
@@ -39,7 +30,6 @@ export default function reducer(state = initialState, action) {
       localStorage.setItem('token', action?.payload?.token)
       return {
         ...state,
-        userLoading: false,
         isAuthenticated: true,
         user: action.payload.user
       };
@@ -48,7 +38,6 @@ export default function reducer(state = initialState, action) {
       localStorage.setItem('token', action?.payload?.token)
       return {
         ...state,
-        userLoading: false,
         isAuthenticated: true,
         user: action.payload.user,
       };
@@ -64,13 +53,11 @@ export default function reducer(state = initialState, action) {
       }
     case LOGIN_FAILED:
     case REGISTER_FAILED:
-    case SET_USER_FAILED:
       localStorage.removeItem('token')
       return {
         ...state,
         token: null,
         user: null,
-        userLoading: false,
         isAuthenticated: false
       };
     case LOGOUT_SUCCESS:
@@ -79,7 +66,6 @@ export default function reducer(state = initialState, action) {
         ...state,
         token: null,
         user: null,
-        userLoading: false,
         isAuthenticated: false
       };
     case CHANGE_SETTINGS:

@@ -9,7 +9,8 @@ import {
   UPDATING_POLL,
   ADD_COMMENT,
   DELETE_COMMENT,
-  UPDATE_POLL
+  UPDATE_POLL,
+  RESET_CREATED
 } from "../actions/types";
 
 const initialState = {
@@ -36,7 +37,7 @@ export default function reducer(state = initialState, action) {
         pollLoading: false,
         pollCreated: false,
         pollLoaded: true,
-        polls: action.payload
+        polls: action.payload.polls
       };
     case GET_POLLS_FAILED:
       return {
@@ -53,7 +54,7 @@ export default function reducer(state = initialState, action) {
     case CREATE_POLL:
       return {
         ...state,
-        polls: action.payload,
+        polls: action.payload.polls,
         pollCreated: true,
         pollCreating: false
       };
@@ -63,6 +64,11 @@ export default function reducer(state = initialState, action) {
         pollCreated: false,
         pollCreating: false
       };
+    case RESET_CREATED:
+      return {
+        ...state,
+        pollCreated: false
+      }
     case UPDATING_POLL:
       return {
         ...state,
@@ -72,22 +78,22 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         updatingPoll: false,
-        polls: action.payload
+        polls: action.payload.polls
       };
     case ADD_COMMENT:
       return {
         ...state,
-        polls: action.payload
+        polls: action.payload.polls
       };
     case DELETE_COMMENT:
       return {
         ...state,
-        polls: action.payload
+        polls: action.payload.polls
       };
     case DELETE_POLL:
       return {
         ...state,
-        polls: action.payload
+        polls: action.payload.polls
       };
     default:
       return state;

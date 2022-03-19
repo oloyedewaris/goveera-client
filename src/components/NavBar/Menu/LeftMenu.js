@@ -14,7 +14,7 @@ const LeftMenu = () => {
       {user && user.company && <>
         <Menu.Item key="home">
           <NavLink exact to="/home">
-            <HomeOutlined /> Home
+            <HomeOutlined /> {user.company.name}
           </NavLink>
         </Menu.Item>
         <Menu.Item key="notifications">
@@ -24,9 +24,9 @@ const LeftMenu = () => {
             </NavLink>
           </Badge>
         </Menu.Item>
-        <Menu.Item key="company">
-          <NavLink exact to="/company">
-            <UsergroupAddOutlined /> {user.company.name}
+        <Menu.Item key="colleagues">
+          <NavLink exact to="/colleagues">
+            <UsergroupAddOutlined /> Colleagues
           </NavLink>
         </Menu.Item>
         <Menu.Item key="discover">

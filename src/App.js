@@ -11,7 +11,7 @@ import Login from "./pages/Login/Login";
 import RegisterUser from "./pages/Register/RegisterUser";
 import RegisterCompany from "./pages/Register/RegisterCompany";
 import Discover from "./pages/Discover/Discover";
-import Company from "./pages/Discover/Company";
+import MyColleagues from "./pages/Discover/Colleagues";
 import Profile from "./pages/Profile/Profile";
 import Create from "./components/Create/Create";
 import Footer from "./components/Footer/Footer";
@@ -54,7 +54,7 @@ const App = () => {
             <Route exact path="/home" component={auth(large(Feeds))} />
             <Route exact path="/notifications" component={auth(large(Notifications))} />
             <Route exact path="/discover" component={auth(large(Discover))} />
-            <Route exact path="/company" component={auth(large(Company))} />
+            <Route exact path="/colleagues" component={auth(large(MyColleagues))} />
             <Route exact path="/post/:id" component={auth(large(Post))} />
             <Route exact path="/project/:id" component={auth(large(Project))} />
             <Route exact path="/poll/:id" component={auth(large(Poll))} />

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Button, Input, Form } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
-import { createPoll } from "../../../redux/actions/pollActions";
+import { createPoll, resetCreated } from "../../../redux/actions/pollActions";
 import Spinner from "../../Spinner/Spinner";
+import { useHistory } from "react-router-dom";
 
 const CreatePoll = ({ onClose }) => {
   const dispatch = useDispatch();
+  const history = useHistory()
   const pollCreating = useSelector(state => state.poll.pollCreating);
   const pollCreated = useSelector(state => state.poll.pollCreated);
   const [error, setError] = useState(null);
@@ -18,9 +20,14 @@ const CreatePoll = ({ onClose }) => {
     if (pollCreated) {
       setQuestion("");
       setOptions([]);
+
       onClose();
     }
-  }, [pollCreated, onClose])
+    return () => {
+      dispatch(resetCreated())
+      // history.push('/home?tab=poll')
+    }
+  }, [pollCreated, onClose, dispatch, history])
 
   const onQuestionChange = e => {
     setError(null);

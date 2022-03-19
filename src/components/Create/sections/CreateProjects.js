@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import { Button, Form, Input, Alert, DatePicker } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
-import { createProject } from "../../../redux/actions/projectActions";
+import { createProject, resetCreated } from "../../../redux/actions/projectActions";
 import Spinner from "../../Spinner/Spinner";
 
 const { RangePicker } = DatePicker;
 
 const CreateProject = ({ onClose }) => {
   const dispatch = useDispatch();
+  const history = useHistory()
   const projectCreating = useSelector(state => state.project.projectCreating);
   const projectCreated = useSelector(state => state.project.projectCreated);
 
@@ -31,7 +33,11 @@ const CreateProject = ({ onClose }) => {
       setError(null);
       onClose();
     }
-  }, [projectCreated, onClose])
+    return () => {
+      dispatch(resetCreated())
+      // history.push('/home?tab=project')
+    }
+  }, [projectCreated, onClose, dispatch, history])
 
   const onTitleChange = e => {
     setError(null)

@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Card, Avatar, Button, Modal, Dropdown, Menu } from "antd";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios"
+import axiosInstance from "../../util/axiosInstance";
 import { UserOutlined, EditOutlined, LinkOutlined, SettingOutlined } from '@ant-design/icons';
 import ProfileFeeds from "./ProfileFeeds";
 import Spinner from "../../components/Spinner/Spinner";
 import Upload from "./UploadImage";
 import './Profile.less';
-import { tokenConfig } from '../../redux/actions/authActions'
 
 const { Meta } = Card;
 const Profile = () => {
@@ -20,7 +19,7 @@ const Profile = () => {
 
   useEffect(() => {
     setLoading(true)
-    axios.get(`https://goveera-server.herokuapp.com/api/users/${userId}`, tokenConfig())
+    axiosInstance.get(`/api/users/${userId}`)
       .then(res => {
         setUser(res.data)
         setLoading(false)

@@ -2,9 +2,9 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { Card, Avatar, Skeleton, Dropdown, Menu } from "antd";
 import { Link } from "react-router-dom"
-import axios from "axios";
+import axiosInstance from "../../util/axiosInstance";
 import { UsergroupDeleteOutlined, EyeOutlined, UserOutlined } from "@ant-design/icons"
-import { tokenConfig } from '../../redux/actions/authActions'
+import truncString from "../../util/truncString";
 
 const Colleagues = () => {
   const { Meta } = Card;
@@ -13,7 +13,7 @@ const Colleagues = () => {
   const [colleaguesLoading, setColleaguesLoading] = useState(false)
 
   const getColleagues = useCallback(() => {
-    axios.get(`https://goveera-server.herokuapp.com/api/users/colleagues/limit`, tokenConfig())
+    axiosInstance.get(`/api/users/colleagues/limit`)
       .then(res => {
         setColleagues(res.data)
         setColleaguesLoading(false)
@@ -30,7 +30,7 @@ const Colleagues = () => {
   }, [getColleagues]);
 
   const handleRemove = (userId) => {
-    axios.delete(`https://goveera-server.herokuapp.com/api/users?userId=${userId}`, tokenConfig())
+    axiosInstance.delete(`/api/users?userId=${userId}`)
       .then(res => {
         if (res.data.deleted)
           getColleagues();
@@ -64,7 +64,7 @@ const Colleagues = () => {
                     </Menu>
                   } trigger={["click"]} />
                   <p><Avatar icon={!user.image && <UserOutlined />} className="center-avatar" size={70} src={user.image} /></p>
-                  <Meta title={`${user.firstName} ${user.lastName}`} description={user.email} />
+                  <Meta title={truncString(`${user.firstName} ${user.lastName}`, 12)} description={truncString(user.email, 12)} />
                 </Card>
               </div>
             ))

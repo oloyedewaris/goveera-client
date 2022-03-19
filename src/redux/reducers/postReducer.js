@@ -9,7 +9,8 @@ import {
   DELETE_COMMENT,
   DELETE_POST,
   UPDATING_POST_LIKE,
-  UPDATE_POST_LIKES
+  UPDATE_POST_LIKES,
+  RESET_CREATED
 } from "../actions/types";
 
 const initialState = {
@@ -31,12 +32,13 @@ export default function reducer(state = initialState, action) {
         postLoaded: false
       };
     case GET_POSTS:
+      console.log('action.payload', action.payload)
       return {
         ...state,
         postLoading: false,
         postCreated: false,
         postLoaded: true,
-        posts: action.payload
+        posts: action.payload.posts
       };
     case GET_POSTS_FAILED:
       return {
@@ -53,7 +55,7 @@ export default function reducer(state = initialState, action) {
     case CREATE_POST:
       return {
         ...state,
-        posts: action.payload,
+        posts: action.payload.posts,
         postCreated: true,
         postCreating: false
       };
@@ -63,6 +65,11 @@ export default function reducer(state = initialState, action) {
         postCreated: false,
         postCreating: false
       };
+    case RESET_CREATED:
+      return {
+        ...state,
+        postCreated: false
+      }
     case UPDATING_POST_LIKE:
       return {
         ...state,
@@ -72,22 +79,22 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         updatingPostLike: false,
-        posts: action.payload
+        posts: action.payload.posts
       };
     case ADD_COMMENT:
       return {
         ...state,
-        posts: action.payload
+        posts: action.payload.posts
       };
     case DELETE_COMMENT:
       return {
         ...state,
-        posts: action.payload
+        posts: action.payload.posts
       };
     case DELETE_POST:
       return {
         ...state,
-        posts: action.payload
+        posts: action.payload.posts
       };
     default:
       return state;

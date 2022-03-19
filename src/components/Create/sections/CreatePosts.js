@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import { Alert, Button, Input, Form, Checkbox } from "antd";
-import { createPost } from "../../../redux/actions/postActions";
+import { createPost, resetCreated } from "../../../redux/actions/postActions";
 import Spinner from "../../Spinner/Spinner";
 
 function CreatePosts({ onClose }) {
   const dispatch = useDispatch();
+  const history = useHistory()
   const postCreating = useSelector(state => state.post.postCreating);
   const postCreated = useSelector(state => state.post.postCreated);
   const [error, setError] = useState(null);
@@ -20,7 +22,12 @@ function CreatePosts({ onClose }) {
     if (postCreated) {
       onClose();
     }
-  }, [postCreated, onClose])
+    return () => {
+      dispatch(resetCreated())
+      setAnnouncement(false)
+      // history.push('/home?tab=post')
+    }
+  }, [postCreated, onClose, dispatch, history])
 
   const onInputChange = e => {
     setError(null);

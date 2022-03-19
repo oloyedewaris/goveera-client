@@ -53,7 +53,7 @@ const PostsFeed = () => {
             ) : (
               <List
                 itemLayout="vertical"
-                pagination={{ pageSize: 5 }}
+                pagination={{ pageSize: 8 }}
                 dataSource={posts}
                 renderItem={(post, i) => (
                   <List.Item
@@ -114,7 +114,7 @@ const PostsFeed = () => {
                         <div className="post-in-list">
                           {post.text}
                           {post.isAnnouncement ? <p className="time_ago"><PushpinOutlined /> Announcement</p> :
-                            <p className="time_ago">{timeAgo.format(post.postedTime)}</p>}
+                            <p className="time_ago">{timeAgo.format(post.postedTime, 'twitter-now')}</p>}
                         </div>
                       }
                     />

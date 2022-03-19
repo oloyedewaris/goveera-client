@@ -20,7 +20,9 @@ const LandingPage = () => {
               business transparency. This, in turn, may invite employee's
               participation, foster e-governance, and facilitate efficient business systems.
             </p>
-            <Button size='large' style={{ color: '#ff889c' }} className='my_button'><Link to='/register'>Create an account</Link></Button>
+            <Button size='large' style={{ color: '#ff889c' }} className='my_button'>
+              <Link to='/register'>Create a free account now</Link>
+            </Button>
           </div>
         </Col>
         <Col xs={24} sm={24} md={20} lg={8}>
@@ -44,7 +46,9 @@ const LandingPage = () => {
               Here at Goveera, we conclude that there is a need to develop theories, models, and
               facilities to assist managers/CEOs in addressing this balancing challenge
             </p>
-            <Button className='my_button' type='link'><Link to='/about_app'>Learn more about the workflow</Link></Button>
+            <Button className='my_button' type='link'>
+              <Link to='/about_app'>Learn more about the workflow</Link>
+            </Button>
           </div>
         </Col>
       </Row>
@@ -72,7 +76,7 @@ const LandingPage = () => {
         <Col xs={24} sm={24} md={20} lg={16}>
           <div>
             <h2 className='paragraphs'>Goveera leads to a transformation in work processes</h2>
-            <Button size='large' className='my_button' type='primary'><Link to='/register'>Get a free account now</Link></Button>
+            <Button size='large' className='my_button' type='primary'><Link to='/register'>Get your account now</Link></Button>
           </div>
         </Col>
         <Col xs={24} sm={24} md={20} lg={8}>

@@ -32,7 +32,7 @@ function Notifications() {
       {Notifications ?
         <List
           itemLayout="vertical"
-          pagination={{ pageSize: 4 }}
+          pagination={{ pageSize: 8 }}
           dataSource={Notifications}
           renderItem={(notification, i) => {
             let icon;
@@ -61,7 +61,6 @@ function Notifications() {
             }
             return (
               <div style={{ backgroundColor: getColor(notification.viewed), margin: 5, padding: 5, borderRadius: 3 }}>
-                {console.log(notification.link)}
                 <Link to={notification.link}>
                   <List.Item key={i}>
                     <List.Item.Meta
@@ -69,7 +68,7 @@ function Notifications() {
                       title={notification.title}
                       description={notification.body}
                     />
-                    <p style={{ margin: "auto 10px" }}>{timeAgo.format(notification.time)}</p>
+                    <p style={{ margin: "auto 10px" }}>{timeAgo.format(notification.time, 'twitter-now')}</p>
                   </List.Item>
                 </Link>
               </div>

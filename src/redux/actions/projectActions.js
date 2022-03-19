@@ -10,15 +10,15 @@ import {
   DELETE_PROJECT,
   UPDATING_PROJECT,
   UPDATE_PROJECT,
+  RESET_CREATED
 } from "./types";
-import axios from "axios";
+import axiosInstance from "../../util/axiosInstance";
 import { getErrors } from "./errorActions";
-import { tokenConfig } from "./authActions";
 
-export const getProjects = () => (dispatch, getState) => {
+export const getProjects = () => (dispatch) => {
   dispatch({ type: GETTING_PROJECTS });
-  axios
-    .get("https://goveera-server.herokuapp.com/api/projects", tokenConfig())
+  axiosInstance
+    .get("/api/projects")
     .then(res => dispatch({ type: GET_PROJECTS, payload: res.data }))
     .catch(err => {
       if (err.response)
@@ -29,10 +29,10 @@ export const getProjects = () => (dispatch, getState) => {
     });
 };
 
-export const createProject = body => (dispatch, getState) => {
+export const createProject = body => (dispatch) => {
   dispatch({ type: CREATING_PROJECT });
-  axios
-    .post("https://goveera-server.herokuapp.com/api/projects", body, tokenConfig())
+  axiosInstance
+    .post("/api/projects", body)
     .then(res =>
       dispatch({
         type: CREATE_PROJECT,
@@ -55,17 +55,18 @@ export const createProject = body => (dispatch, getState) => {
     });
 };
 
-export const updateProject = ({ projectId, action, stage, taskName }) => (
-  dispatch,
-  getState
-) => {
+export const resetCreated = () => (dispatch) => {
+  dispatch({ type: RESET_CREATED });
+};
+
+export const updateProject = ({ projectId, action, stage, taskName }) => (dispatch) => {
   dispatch({
     type: UPDATING_PROJECT
   });
   const body = { action, stage, taskName };
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/projects/${projectId}`, body, tokenConfig())
+  axiosInstance
+    .patch(`/api/projects/${projectId}`, body)
     .then(res =>
       dispatch({
         type: UPDATE_PROJECT,
@@ -84,15 +85,11 @@ export const updateProject = ({ projectId, action, stage, taskName }) => (
     });
 };
 
-
-export const addComment = ({ projectId, action, commenterId, text }) => (
-  dispatch,
-  getState
-) => {
+export const addComment = ({ projectId, action, commenterId, text }) => (dispatch) => {
   const body = { action, commenterId, text };
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/projects/${projectId}`, body, tokenConfig())
+  axiosInstance
+    .patch(`/api/projects/${projectId}`, body)
     .then(res =>
       dispatch({
         type: ADD_PROJECT_COMMENT,
@@ -113,12 +110,11 @@ export const addComment = ({ projectId, action, commenterId, text }) => (
 
 export const deleteComment = ({ projectId, commentId, action }) => (
   dispatch,
-  getState
 ) => {
   const body = { action, commentId };
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/projects/${projectId}`, body, tokenConfig())
+  axiosInstance
+    .patch(`/api/projects/${projectId}`, body)
     .then(res =>
       dispatch({
         type: DELETE_PROJECT_COMMENT,
@@ -137,9 +133,9 @@ export const deleteComment = ({ projectId, commentId, action }) => (
     });
 };
 
-export const deleteProject = projectId => (dispatch, getState) => {
-  axios
-    .delete(`https://goveera-server.herokuapp.com/api/projects/${projectId}`, tokenConfig())
+export const deleteProject = projectId => (dispatch) => {
+  axiosInstance
+    .delete(`/api/projects/${projectId}`)
     .then(res =>
       dispatch({
         type: DELETE_PROJECT,

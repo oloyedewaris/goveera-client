@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { Modal, List, Avatar, Space } from "antd";
 import { useTransition, animated } from 'react-spring';
 import { getProjects, updateProject } from "../../redux/actions/projectActions";
@@ -27,6 +27,7 @@ const Post = () => {
   const timeAgo = new TimeAgo("en-US");
 
   const dispatch = useDispatch();
+  const history = useHistory()
   const [isOpen, setIsOpen] = useState(false);
   const [projectStage, setProjectStage] = useState(null);
   const [project, setProject] = useState(null);
@@ -92,7 +93,9 @@ const Post = () => {
   return (
     <>
       <div>
-        <div style={{ margin: "5px 10px" }}><Link to="/home?tab=project"><ArrowLeftOutlined /></Link></div>
+        <div onClick={() => history.goBack()} style={{ margin: "5px" }}>
+          <ArrowLeftOutlined />
+        </div>
         {transition((style, item) =>
           item && <animated.div style={style}>
             {project ? (
@@ -128,7 +131,7 @@ const Post = () => {
                   <List.Item.Meta
                     avatar={<Avatar icon={!project.initiator.image && <UserOutlined />} src={project.initiator.image} />}
                     title={<Link to={`/profile/${project.initiator._id}`}>{`${project.initiator.firstName} ${project.initiator.lastName}`}</Link>}
-                    description={timeAgo.format(project.postedTime)}
+                    description={timeAgo.format(project.postedTime, 'twitter-now')}
                   />
                 </List.Item>
                 <h3>{project.title}</h3>

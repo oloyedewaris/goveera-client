@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Input, Select, Alert } from "antd";
-import axios from "axios";
+import axiosInstance from "../../util/axiosInstance";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../redux/actions/authActions";
@@ -31,7 +31,7 @@ const RegisterUser = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    axios.get("https://goveera-server.herokuapp.com/api/company/get_all_companies")
+    axiosInstance.get("/api/company/get_all_companies")
       .then(res => setCompanies(res.data))
       .catch(err => alert("Can't get companies"))
   }, []);

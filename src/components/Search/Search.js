@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { AutoComplete, Input } from 'antd';
-import axios from "axios";
+import axiosInstance from '../../util/axiosInstance';
 import { useHistory } from "react-router-dom";
-import { tokenConfig } from '../../redux/actions/authActions'
 
 const Search = () => {
   const history = useHistory()
@@ -20,7 +19,7 @@ const Search = () => {
 
   const onSearch = (data) => {
     setValue(data);
-    axios.get(`https://goveera-server.herokuapp.com/api/users/search?text=${data}`, tokenConfig())
+    axiosInstance.get(`/api/users/search?text=${data}`)
       .then(res => {
         const users = res.data.map(user => ({ value: `${user.firstName} ${user.lastName}` }))
         setUsers(res.data)

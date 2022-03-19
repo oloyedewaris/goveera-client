@@ -1,7 +1,5 @@
 //Auth actions
-export const USER_LOADING = "USER_LOADING";
 export const SET_USER = "SET_USER";
-export const SET_USER_FAILED = "SET_USER_FAILED";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
@@ -53,3 +51,6 @@ export const DELETE_PROJECT_COMMENT = "DELETE_PROJECT_COMMENT";
 export const DELETE_PROJECT = "DELETE_PROJECT";
 export const UPDATING_PROJECT = "UPDATING_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
+
+//others
+export const RESET_CREATED = "RESET_CREATED"

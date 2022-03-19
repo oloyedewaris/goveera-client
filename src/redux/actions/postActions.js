@@ -9,16 +9,16 @@ import {
   DELETE_COMMENT,
   DELETE_POST,
   UPDATING_POST_LIKE,
-  UPDATE_POST_LIKES
+  UPDATE_POST_LIKES,
+  RESET_CREATED
 } from "./types";
-import axios from "axios";
+import axiosInstance from "../../util/axiosInstance";
 import { getErrors } from "./errorActions";
-import { tokenConfig } from "./authActions";
 
-export const getPosts = () => (dispatch, getState) => {
+export const getPosts = () => (dispatch) => {
   dispatch({ type: GETTING_POSTS });
-  axios
-    .get("https://goveera-server.herokuapp.com/api/posts", tokenConfig())
+  axiosInstance
+    .get("/api/posts")
     .then(res =>
       dispatch({
         type: GET_POSTS,
@@ -40,11 +40,11 @@ export const getPosts = () => (dispatch, getState) => {
     });
 };
 
-export const createPost = body => (dispatch, getState) => {
+export const createPost = body => (dispatch) => {
   dispatch({ type: CREATING_POST });
 
-  axios
-    .post("https://goveera-server.herokuapp.com/api/posts", body, tokenConfig())
+  axiosInstance
+    .post("/api/posts", body)
     .then(res =>
       dispatch({
         type: CREATE_POST,
@@ -67,16 +67,17 @@ export const createPost = body => (dispatch, getState) => {
     });
 };
 
-export const updatePostLikes = ({ postId, action }) => (
-  dispatch,
-  getState
-) => {
+export const resetCreated = () => (dispatch) => {
+  dispatch({ type: RESET_CREATED });
+};
+
+export const updatePostLikes = ({ postId, action }) => (dispatch) => {
   dispatch({
     type: UPDATING_POST_LIKE
   });
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/posts/${postId}`, { action }, tokenConfig())
+  axiosInstance
+    .patch(`/api/posts/${postId}`, { action })
     .then(res =>
       dispatch({
         type: UPDATE_POST_LIKES,
@@ -95,11 +96,11 @@ export const updatePostLikes = ({ postId, action }) => (
     });
 };
 
-export const addComment = (postId, action, commenterId, text) => (dispatch, getState) => {
+export const addComment = (postId, action, commenterId, text) => (dispatch) => {
   const body = { action, commenterId, text };
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/posts/${postId}`, body, tokenConfig())
+  axiosInstance
+    .patch(`/api/posts/${postId}`, body)
     .then(res =>
       dispatch({
         type: ADD_COMMENT,
@@ -118,14 +119,11 @@ export const addComment = (postId, action, commenterId, text) => (dispatch, getS
     });
 };
 
-export const deleteComment = (postId, commentId, action) => (
-  dispatch,
-  getState
-) => {
+export const deleteComment = (postId, commentId, action) => (dispatch) => {
   const body = { action, commentId };
 
-  axios
-    .patch(`https://goveera-server.herokuapp.com/api/posts/${postId}`, body, tokenConfig())
+  axiosInstance
+    .patch(`/api/posts/${postId}`, body)
     .then(res =>
       dispatch({
         type: DELETE_COMMENT,
@@ -144,9 +142,9 @@ export const deleteComment = (postId, commentId, action) => (
     });
 };
 
-export const deletePost = postId => (dispatch, getState) => {
-  axios
-    .delete(`https://goveera-server.herokuapp.com/api/posts/${postId}`, tokenConfig())
+export const deletePost = postId => (dispatch) => {
+  axiosInstance
+    .delete(`/api/posts/${postId}`)
     .then(res =>
       dispatch({
         type: DELETE_POST,

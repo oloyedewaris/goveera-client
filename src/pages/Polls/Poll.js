@@ -86,9 +86,9 @@ const Poll = () => {
 
   return (
     <div>
-      <Link style={{ margin: "5px 10px" }} to="/home?tab=poll">
+      <div onClick={() => history.goBack()} style={{ margin: "5px" }}>
         <ArrowLeftOutlined />
-      </Link>
+      </div>
       {transition((style, item) =>
         item && <animated.div style={style}>
           {poll ? (
@@ -164,7 +164,7 @@ const Poll = () => {
                           </div>
                         )
                       })}
-                      <p className="time_ago">{timeAgo.format(poll.postedTime)}</p>
+                      <p className="time_ago">{timeAgo.format(poll.postedTime, 'twitter-now')}</p>
                     </div>
                   } />
                 <div>
