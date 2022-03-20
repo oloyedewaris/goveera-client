@@ -10,10 +10,13 @@ function Large(Component) {
       <div className='body'>
         <Row className="large_comp_con">
           <Col md={6} lg={5}><Profile /></Col>
-          <Col md={12} lg={14}><Component /></Col>
+          <Col md={12} lg={14}><div className='scroll_main'><Component /></div></Col>
           <Col md={6} lg={5}><Colleagues /></Col>
         </Row>
-        <div className="small_comp_con"><Search /><Component /></div>
+        <div className="small_comp_con">
+          <Search />
+          <Component />
+        </div>
       </div>
     );
   };

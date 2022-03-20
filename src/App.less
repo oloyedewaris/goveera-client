@@ -15,6 +15,10 @@ body {
   padding-top: 90px;
   min-height: 90vh;
 }
+.scroll_main{
+  overflow-y: scroll;
+  height: 80vh
+}
 
 .ant-list-item {
     flex-wrap: wrap !important;
@@ -49,4 +53,20 @@ body {
   .below_nav {
     padding-top: 60px;
   }
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

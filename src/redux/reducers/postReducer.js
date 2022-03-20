@@ -32,7 +32,6 @@ export default function reducer(state = initialState, action) {
         postLoaded: false
       };
     case GET_POSTS:
-      console.log('action.payload', action.payload)
       return {
         ...state,
         postLoading: false,

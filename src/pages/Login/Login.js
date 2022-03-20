@@ -9,28 +9,23 @@ const LoginUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState(null);
-  const [redirect, setRedirect] = useState(null);
   const [submiting, setSubmiting] = useState(false);
 
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const auth = useSelector(state => state.auth);
   const error = useSelector(state => state.error);
 
-  const history = useHistory();
-
   useEffect(() => {
     if (auth.isAuthenticated) {
-      setRedirect(true);
+      history.push("/home")
     }
-  }, [auth]);
+  }, [auth, history]);
 
   useEffect(() => {
     if (error.id === "LOGIN_FAILED") {
       setMsg(error.msg);
       setSubmiting(false);
-    } else {
-      setMsg(null);
     }
   }, [error]);
 
@@ -56,29 +51,27 @@ const LoginUser = () => {
 
   return (
     <div>
-      {!redirect ? (
-        <div className="container">
-          <h2>Login here</h2>
-          <Form className="form" onKeyPress={e => e.key === 'Enter' && isSubmiting()} >
-            {msg && <Alert className="alert" message={msg} type="error" showIcon closable />}
-            <Form.Item label="Email" name="email">
-              <Input type="email" value={email} placeholder="Your Email" onChange={onEmailChange} />
-            </Form.Item>
-            <Form.Item label="Password" name="password">
-              <Input.Password type="password" value={password} placeholder="Password" onChange={onPasswordChange} />
-            </Form.Item>
-            <Button type="primary" onClick={isSubmiting} disabled={submiting} loading={submiting} danger={msg}>
-              Submit
-            </Button>
-            <p>
-              Don't have an account, Register{" "}
-              <Link style={{ color: "#ff889c" }} to="/register">
-                here
-              </Link>
-            </p>
-          </Form>
-        </div>
-      ) : <div>{history.push("/home")}</div>}
+      <div className="container">
+        <h2>Login here</h2>
+        <Form className="form" onKeyPress={e => e.key === 'Enter' && isSubmiting()} >
+          {msg && <Alert className="alert" message={msg} type="error" showIcon closable />}
+          <Form.Item label="Email" name="email">
+            <Input type="email" value={email} placeholder="Your Email" onChange={onEmailChange} />
+          </Form.Item>
+          <Form.Item label="Password" name="password">
+            <Input.Password type="password" value={password} placeholder="Password" onChange={onPasswordChange} />
+          </Form.Item>
+          <Button type="primary" onClick={isSubmiting} disabled={submiting} loading={submiting} danger={msg}>
+            Submit
+          </Button>
+          <p>
+            Don't have an account, Register{" "}
+            <Link style={{ color: "#ff889c" }} to="/register">
+              here
+            </Link>
+          </p>
+        </Form>
+      </div>
     </div>
   );
 };

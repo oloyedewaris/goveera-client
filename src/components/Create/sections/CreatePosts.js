@@ -50,23 +50,22 @@ function CreatePosts({ onClose }) {
       {error && <Alert type="error" message={error} />}
       {postCreating && <Spinner />}
       <Form className="post_input_container">
-        <Input.TextArea
-          value={text}
+        <Input.TextArea value={text}
+          className="post_input"
           placeholder="What's on your mind"
-          onChange={onInputChange}
-        />
-        <Button
-          className="post-button"
-          size="large"
-          type="primary"
-          onClick={onCreatePost}
-        >
-          Post
-        </Button>
+          onChange={onInputChange} />
+        <div className='post_submit_area'>
+          <div className='post_announcement'>
+            <Checkbox checked={isAnnouncement}
+              onChange={() => setAnnouncement(!isAnnouncement)}>
+              Announcement
+            </Checkbox>
+            <p style={{ fontSize: '11px' }}>Announcements are pinned to the top</p>
+          </div>
+          <Button className='button' size="medium" type="primary" onClick={onCreatePost}>Post</Button>
+        </div>
       </Form>
-      <Checkbox style={{ marginTop: '10px' }} onChange={() => setAnnouncement(!isAnnouncement)} checked={isAnnouncement}>Make an announcement</Checkbox>
-      <p style={{ fontSize: '11px', marginTop: '3px' }}>Announcements are pinned to the top</p>
-    </div>
+    </div >
   );
 }
 
