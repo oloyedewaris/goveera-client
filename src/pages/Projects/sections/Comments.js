@@ -47,7 +47,7 @@ const Comments = ({ project }) => {
                 author={`${comment.commenter.firstName} ${comment.commenter.lastName}`}
                 avatar={<Avatar icon={!comment.commenter.image && <UserOutlined />} src={comment.commenter.image} />}
                 content={comment.text}
-                datetime={timeAgo.format(comment.timestamp, 'twitter-now')}
+                datetime={timeAgo.format(comment.timestamp, 'mini')}
               />
             </li>
           )}

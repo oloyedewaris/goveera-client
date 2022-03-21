@@ -11,7 +11,9 @@ import {
   CLEAR_NOTIFICATIONS,
   SAVE_ITEM
 } from "./types";
+import axios from 'axios';
 import axiosInstance from "../../util/axiosInstance";
+import { BACKEND_URL } from '../../util/constants';
 import { getErrors, clearErrors } from "./errorActions";
 
 
@@ -25,8 +27,8 @@ export const setUser = data => dispatch => {
 
 //Log user in
 export const login = body => dispatch => {
-  axiosInstance
-    .post("/api/auth/login", body)
+  axios
+    .post(`${BACKEND_URL}/api/auth/login`, body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -48,9 +50,8 @@ export const login = body => dispatch => {
 
 //Register User
 export const register = body => dispatch => {
-
-  axiosInstance
-    .post("/api/auth/register", body)
+  axios
+    .post(`${BACKEND_URL}/api/auth/register`, body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({
@@ -60,20 +61,16 @@ export const register = body => dispatch => {
     })
     .catch((err) => {
       if (err.response) {
-        dispatch(
-          getErrors(err.response.data, err.response.status, "REGISTER_FAILED")
-        );
+        dispatch(getErrors(err.response.data, err.response.status, "REGISTER_FAILED"));
       }
-      dispatch({
-        type: REGISTER_FAILED,
-      });
+      dispatch({ type: REGISTER_FAILED });
     });
 };
 
 // Register company
 export const registerCompany = body => dispatch => {
-  axiosInstance
-    .post("/api/company/create_company", body)
+  axios
+    .post(`${BACKEND_URL}/api/company/create_company`, body)
     .then((res) => {
       dispatch(clearErrors());
       dispatch({

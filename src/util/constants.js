@@ -1,3 +1,7 @@
-export const BACKEND_URL = "https://goveera-server.herokuapp.com/"
+let BACKEND_URL;
 
-// export const BACKEND_URL = "http://localhost:5000/"
+if (process.env.NODE_ENV === 'development')
+  BACKEND_URL = "http://localhost:5000"
+else BACKEND_URL = "https://goveera-server.herokuapp.com"
+
+export { BACKEND_URL }

@@ -25,7 +25,10 @@ const Search = () => {
         setUsers(res.data)
         setOptions(users)
       })
-      .catch(e => alert("Can't search user"))
+      .catch(err => {
+        alert("Can't search user")
+        console.log(err)
+      })
   };
 
   return (

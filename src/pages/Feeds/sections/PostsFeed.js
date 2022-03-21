@@ -4,7 +4,7 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { CommentOutlined, DeleteTwoTone, HeartOutlined, HeartFilled, EyeOutlined, LinkOutlined, SaveOutlined, UserOutlined, PushpinOutlined } from "@ant-design/icons";
+import { CommentOutlined, DeleteTwoTone, HeartOutlined, HeartFilled, EyeOutlined, LinkOutlined, TagOutlined, UserOutlined, PushpinOutlined } from "@ant-design/icons";
 import { getPosts, updatePostLikes, deletePost } from "../../../redux/actions/postActions";
 import { saveItem } from "../../../redux/actions/authActions";
 
@@ -87,7 +87,7 @@ const PostsFeed = () => {
                               dispatch(saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text, action: 'save' }))
                           }
                           key="4"
-                          icon={<SaveOutlined />}>
+                          icon={<TagOutlined />}>
                           {auth.user.saves.find((save) => save.link === `/post/${post._id}`) ? 'Unsave' : 'Save'}
                         </Menu.Item>
                         <Menu.Item onClick={() => navigator.clipboard.writeText(`${window.location.origin}/post/${post._id}`)} key="2" icon={<LinkOutlined />}>
@@ -114,7 +114,7 @@ const PostsFeed = () => {
                         <div className="post-in-list">
                           {post.text}
                           {post.isAnnouncement ? <p className="time_ago"><PushpinOutlined /> Announcement</p> :
-                            <p className="time_ago">{timeAgo.format(post.postedTime, 'twitter-now')}</p>}
+                            <p className="time_ago">{timeAgo.format(post.postedTime)}</p>}
                         </div>
                       }
                     />

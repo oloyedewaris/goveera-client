@@ -12,7 +12,7 @@ const MyColleagues = () => {
   const [colleagues, setColleagues] = useState([])
   const [limit, setLimit] = useState(8);
   const [count, setCount] = useState(null);
-  const [colleaguesLoading, setColleaguesLoading] = useState(false)
+  const [colleaguesLoading, setColleaguesLoading] = useState(true)
 
   const getColleagues = (limit) => {
     axiosInstance.get(`/api/users/colleagues?limit=${limit}`)
@@ -28,7 +28,6 @@ const MyColleagues = () => {
   }
 
   useEffect(() => {
-    setColleaguesLoading(true)
     getColleagues(limit)
   }, [limit]);
 

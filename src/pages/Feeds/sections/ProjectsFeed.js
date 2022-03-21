@@ -4,7 +4,7 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { LikeOutlined, LikeFilled, DislikeFilled, DislikeOutlined, CommentOutlined, DeleteTwoTone, SaveOutlined, EyeOutlined, LinkOutlined, UserOutlined } from "@ant-design/icons";
+import { LikeOutlined, LikeFilled, DislikeFilled, DislikeOutlined, CommentOutlined, DeleteTwoTone, TagOutlined, EyeOutlined, LinkOutlined, UserOutlined } from "@ant-design/icons";
 import { getProjects, updateProject, deleteProject } from "../../../redux/actions/projectActions";
 import { saveItem } from "../../../redux/actions/authActions";
 
@@ -96,7 +96,7 @@ const ProjectsFeed = () => {
                                 dispatch(saveItem({ type: 'project', link: `/project/${project._id}`, title: project.question, action: 'save' }))
                             }
                             key="4"
-                            icon={<SaveOutlined />}>
+                            icon={<TagOutlined />}>
                             {auth.user.saves.find((save) => save.link === `/project/${project._id}`) ? 'Unsave' : 'Save'}
                           </Menu.Item>
                           <Menu.Item onClick={() => navigator.clipboard.writeText(`${window.location.origin}/project/${project._id}`)} key="2" icon={<LinkOutlined />}>
@@ -122,7 +122,7 @@ const ProjectsFeed = () => {
                         description={
                           <div className="post-in-list">
                             <p>{project.description}</p>
-                            <p className="time_ago">{timeAgo.format(project.postedTime, 'twitter-now')}</p>
+                            <p className="time_ago">{timeAgo.format(project.postedTime)}</p>
                           </div>
                         }
                       />

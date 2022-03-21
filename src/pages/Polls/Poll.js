@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { List, Avatar, Space, Menu, Dropdown, Popconfirm } from "antd";
 import TimeAgo from "javascript-time-ago";
-import { ArrowLeftOutlined, UserOutlined, HeartOutlined, HeartFilled, DeleteTwoTone, SaveOutlined, LinkOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, UserOutlined, HeartOutlined, HeartFilled, DeleteTwoTone, TagOutlined, LinkOutlined } from "@ant-design/icons";
 import en from "javascript-time-ago/locale/en";
 import { Link, useParams, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
@@ -118,7 +118,7 @@ const Poll = () => {
                           dispatch(saveItem({ type: 'poll', link: `/poll/${poll._id}`, title: poll.question, action: 'save' }))
                       }
                       key="4"
-                      icon={<SaveOutlined />}>
+                      icon={<TagOutlined />}>
                       {auth.user.saves.find((save) => save.link === `/poll/${poll._id}`) ? 'Unsave' : 'Save'}
                     </Menu.Item>
                     <Menu.Item onClick={() => navigator.clipboard.writeText(`${window.location.origin}/poll/${poll._id}`)} key="2" icon={<LinkOutlined />}>

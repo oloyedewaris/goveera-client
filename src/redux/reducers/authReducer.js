@@ -28,14 +28,12 @@ export default function reducer(state = initialState, action) {
       };
     case LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload?.token)
-      console.log(action.payload)
       return {
         ...state,
         isAuthenticated: true,
         user: action.payload.user
       };
     case REGISTER_SUCCESS:
-      localStorage.setItem("registered", true)
       localStorage.setItem('token', action.payload?.token)
       return {
         ...state,

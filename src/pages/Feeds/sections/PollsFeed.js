@@ -4,7 +4,7 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { DeleteTwoTone, LinkOutlined, EyeOutlined, UserOutlined, HeartOutlined, HeartFilled, CommentOutlined, SaveOutlined } from "@ant-design/icons";
+import { DeleteTwoTone, LinkOutlined, EyeOutlined, UserOutlined, HeartOutlined, HeartFilled, CommentOutlined, TagOutlined } from "@ant-design/icons";
 import { getPolls, deletePoll, updatePoll } from "../../../redux/actions/pollActions";
 import { saveItem } from "../../../redux/actions/authActions";
 
@@ -108,7 +108,7 @@ const PollsFeed = () => {
                                 dispatch(saveItem({ type: 'poll', link: `/poll/${poll._id}`, title: poll.question, action: 'save' }))
                             }
                             key="4"
-                            icon={<SaveOutlined />}>
+                            icon={<TagOutlined />}>
                             {auth.user.saves.find((save) => save.link === `/poll/${poll._id}`) ? 'Unsave' : 'Save'}
                           </Menu.Item>
                           <Menu.Item onClick={() => navigator.clipboard.writeText(`${window.location.origin}/poll/${poll._id}`)} key="2" icon={<LinkOutlined />}>
@@ -155,7 +155,7 @@ const PollsFeed = () => {
                                 </div>
                               )
                             })}
-                            <p className="time_ago">{timeAgo.format(poll.postedTime, 'twitter-now')}</p>
+                            <p className="time_ago">{timeAgo.format(poll.postedTime)}</p>
                           </div>
                         } />
                       <div>

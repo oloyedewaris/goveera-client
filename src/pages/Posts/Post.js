@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { List, Space, Avatar, Menu, Dropdown, Popconfirm } from "antd";
 import { useTransition, animated } from 'react-spring';
-import { ArrowLeftOutlined, HeartOutlined, HeartFilled, UserOutlined, LinkOutlined, SaveOutlined, DeleteTwoTone } from "@ant-design/icons";
+import { ArrowLeftOutlined, HeartOutlined, HeartFilled, UserOutlined, LinkOutlined, TagOutlined, DeleteTwoTone } from "@ant-design/icons";
 import { getPosts, updatePostLikes, deletePost } from "../../redux/actions/postActions";
 import { saveItem } from "../../redux/actions/authActions";
 import Comments from "./sections/Comments";
@@ -82,7 +82,7 @@ const Post = () => {
                         dispatch(saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text, action: 'save' }))
                     }
                     key="4"
-                    icon={<SaveOutlined />}>
+                    icon={<TagOutlined />}>
                     {auth.user.saves.find((save) => save.link === `/post/${post._id}`) ? 'Unsave' : 'Save'}
                   </Menu.Item>
                   <Menu.Item onClick={() => navigator.clipboard.writeText(`${window.location.origin}/post/${post._id}`)} key="2" icon={<LinkOutlined />}>

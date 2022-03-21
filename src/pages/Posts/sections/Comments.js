@@ -51,7 +51,7 @@ const Comments = ({ post }) => {
                     {comment.text}
                   </div>
                 }
-                datetime={timeAgo.format(comment.timestamp, 'twitter-now')}
+                datetime={timeAgo.format(comment.timestamp, 'mini')}
               />
             </li>
           )}

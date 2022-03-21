@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerCompany } from "../../redux/actions/authActions";
 
 const RegisterCompany = () => {
-  const [name, setName] = useState("");
-  const [about, setAbout] = useState("");
-  const [address, setAddress] = useState("");
+  const [form, setForm] = useState({
+    name: { error: null, body: '' },
+    about: { error: null, body: '' },
+    address: { error: null, body: '' },
+  });
+  const { address, name, about } = form
   const [msg, setMsg] = useState(null);
   const [submit, setSubmit] = useState(false);
-  const [redirect, setRedirect] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -22,64 +24,62 @@ const RegisterCompany = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (user && user.company) {
-      setRedirect(true)
-    }
-  }, [user]);
+    if (user && user.company) history.push('/home')
+  }, [user, history]);
 
   useEffect(() => {
     if (error.id === "REGISTER_SUCCESS_FAILED") {
       setMsg(error.msg);
       setSubmit(false);
-    } else {
-      setMsg(null);
     }
   }, [error]);
 
-  const onNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const onAddressChange = (e) => {
-    setAddress(e.target.value);
-  };
-
-  const onAboutChange = (e) => {
-    setAbout(e.target.value);
-  };
-
   const onFormSubmit = (e) => {
-    e.preventDefault();
-    const newCompany = { userId: auth.user._id, name, about, address };
-    dispatch(registerCompany(newCompany));
-  };
-
-  const isSubmiting = (e) => {
     setSubmit(true);
-    onFormSubmit(e);
+    e.preventDefault();
+    if (!address.body || !name.body || !about.body) {
+      if (!name.body) setForm(form => ({ ...form, name: { error: 'name is required', body: '' } }))
+      if (!address.body) setForm(form => ({ ...form, address: { error: 'address is required', body: '' } }))
+      if (!about.body) setForm(form => ({ ...form, about: { error: 'about is required', body: '' } }))
+      setSubmit(false);
+    } else {
+      const newCompany = {
+        userId: auth.user._id,
+        name: name.body,
+        about: about.body,
+        address: address.body
+      };
+      dispatch(registerCompany(newCompany));
+    }
   };
 
   return (
-    <div>
-      {!redirect ? <div className="container">
+    <div className="container">
+      <Form className="form">
         <h2>Register Your Company</h2>
-        <Form className="form">
-          {msg && <Alert className="alert" message={msg} type="error" showIcon closable />}
-          <Form.Item label="Name" name="name">
-            <Input type="text" value={name} placeholder="Company's Name" onChange={onNameChange} />
-          </Form.Item>
-          <Form.Item label="Address" name="address">
-            <Input type="text" value={address} placeholder="Company's Address" onChange={onAddressChange} />
-          </Form.Item>
-          <Form.Item label="About Company">
-            <Input type="text" value={about} placeholder="About Company" onChange={onAboutChange} />
-          </Form.Item>
-          <Button style={{ margin: "5px" }} type="primary" onClick={isSubmiting} disabled={submit} loading={submit} >
-            Submit
-          </Button>
-        </Form>
-      </div> :
-        <>{history.push("/home")}</>}
+        {msg && <Alert className="alert" message={msg} type="error" showIcon closable />}
+        <Form.Item label="Name" name="name">
+          <span style={{ fontSize: 12, color: 'red', marginBottom: 0 }}>{name.error}</span>
+          <Input type="text" style={name.error && ({ border: '1px solid red' })}
+            value={name.body} placeholder="Company's Name"
+            onChange={(e) => setForm({ ...form, name: { error: null, body: e.target.value } })} />
+        </Form.Item>
+        <Form.Item label="Address" name="address">
+          <span style={{ fontSize: 12, color: 'red', marginBottom: 0 }}>{address.error}</span>
+          <Input type="text" style={address.error && ({ border: '1px solid red' })}
+            value={address.body} placeholder="Company's Address"
+            onChange={(e) => setForm({ ...form, address: { error: null, body: e.target.value } })} />
+        </Form.Item>
+        <Form.Item label="About Company" name='about company'>
+          <span style={{ fontSize: 12, color: 'red', marginBottom: 0 }}>{about.error}</span>
+          <Input type="text" style={about.error && ({ border: '1px solid red' })}
+            value={about.body} placeholder="About Company"
+            onChange={(e) => setForm({ ...form, about: { error: null, body: e.target.value } })} />
+        </Form.Item>
+        <Button style={{ margin: "5px" }} type="primary" onClick={onFormSubmit} disabled={submit} loading={submit} >
+          Submit
+        </Button>
+      </Form>
     </div>
   );
 };

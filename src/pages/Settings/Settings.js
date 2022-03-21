@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, List, Modal } from "antd";
+import { Button, List, Modal, Popconfirm } from "antd";
 import Name from "./Sections/Name";
 import Email from "./Sections/Email";
 import Password from "./Sections/Password";
@@ -11,7 +11,6 @@ import { PoweroffOutlined } from "@ant-design/icons";
 function Settings() {
   const [component, setComponent] = useState(null)
   const [modalToggle, setModalToggle] = useState(false)
-  const [logoutModal, setLogoutModal] = useState(false);
   const dispatch = useDispatch();
 
   const firstName = useSelector(state => state.auth.user.firstName);
@@ -38,14 +37,16 @@ function Settings() {
           <Button onClick={() => { setComponent(<Password />); setModalToggle(true) }} size="sm">Change Password</Button>
         </List.Item>
       </List>
-      <Button style={{ color: "red" }} onClick={() => setLogoutModal(true)}><PoweroffOutlined /> Logout</Button>
-      <Modal title='Logout' visible={logoutModal} onCancel={() => setLogoutModal(false)}>
-        <p>Sure you want to logout?</p>
-        <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%', flexDirection: 'row', alignItems: 'center' }}>
-          <Button type='primary' onClick={onLogout}>Yes</Button>
-          <Button onClick={() => setLogoutModal(false)}>No</Button>
-        </div>
-      </Modal>
+      <Button style={{ color: "red" }}>
+        <Popconfirm
+          onConfirm={onLogout}
+          placement="right"
+          title="Are you sure you want to logout"
+          okText="Yes"
+          cancelText="No">
+          <PoweroffOutlined /> Logout
+        </Popconfirm>
+      </Button>
       <Modal title="Edit data" visible={modalToggle} onCancel={() => setModalToggle(false)}>
         {component}
       </Modal>

@@ -6,8 +6,11 @@ import { login } from "../../redux/actions/authActions";
 import './Login.less';
 
 const LoginUser = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    email: { error: null, body: '' },
+    password: { error: null, body: '' }
+  });
+  const { email, password } = form
   const [msg, setMsg] = useState(null);
   const [submiting, setSubmiting] = useState(false);
 
@@ -27,51 +30,52 @@ const LoginUser = () => {
       setMsg(error.msg);
       setSubmiting(false);
     }
+    return () => setSubmiting(false)
   }, [error]);
-
-  const onEmailChange = e => {
-    setEmail(e.target.value);
-  };
-
-  const onPasswordChange = e => {
-    setPassword(e.target.value);
-  };
 
   const onFormSubmit = e => {
     e && e.preventDefault();
-    const newUser = { email, password };
+    setMsg(null)
+    setSubmiting(true)
+    if (!email.body || !password.body) {
+      if (!email.body) setForm(form => ({ ...form, email: { error: 'email is required', body: '' } }))
+      if (!password.body) setForm(form => ({ ...form, password: { error: 'password is required', body: '' } }))
+      return setSubmiting(false);
+    }
+    const newUser = {
+      email: email.body,
+      password: password.body
+    };
     dispatch(login(newUser));
   };
 
-  const isSubmiting = e => {
-    setMsg(null);
-    setSubmiting(true);
-    onFormSubmit(e);
-  };
-
   return (
-    <div>
-      <div className="container">
+    <div className="container">
+      <Form className="form" onKeyPress={e => e.key === 'Enter' && onFormSubmit(e)} >
         <h2>Login here</h2>
-        <Form className="form" onKeyPress={e => e.key === 'Enter' && isSubmiting()} >
-          {msg && <Alert className="alert" message={msg} type="error" showIcon closable />}
-          <Form.Item label="Email" name="email">
-            <Input type="email" value={email} placeholder="Your Email" onChange={onEmailChange} />
-          </Form.Item>
-          <Form.Item label="Password" name="password">
-            <Input.Password type="password" value={password} placeholder="Password" onChange={onPasswordChange} />
-          </Form.Item>
-          <Button type="primary" onClick={isSubmiting} disabled={submiting} loading={submiting} danger={msg}>
-            Submit
-          </Button>
-          <p>
-            Don't have an account, Register{" "}
-            <Link style={{ color: "#ff889c" }} to="/register">
-              here
-            </Link>
-          </p>
-        </Form>
-      </div>
+        {msg && <Alert className="alert" message={msg} type="error" showIcon closable />}
+        <Form.Item label="Email" name="email">
+          <span style={{ fontSize: 12, color: 'red', marginBottom: 0 }}>{email.error}</span>
+          <Input type="email" style={email.error && ({ border: '1px solid red' })}
+            value={email.body} placeholder="Your Email"
+            onChange={(e) => setForm({ ...form, email: { error: null, body: e.target.value } })} />
+        </Form.Item>
+        <Form.Item label="Password" name="password">
+          <span style={{ fontSize: 12, color: 'red', marginBottom: 0 }}>{password.error}</span>
+          <Input.Password type="password" style={password.error && ({ border: '1px solid red' })}
+            value={password.body} placeholder="Password"
+            onChange={(e) => setForm({ ...form, password: { error: null, body: e.target.value } })} />
+        </Form.Item>
+        <Button type="primary" onClick={onFormSubmit} disabled={submiting} loading={submiting} danger={msg}>
+          Submit
+        </Button>
+        <p>
+          Don't have an account, Register{" "}
+          <Link style={{ color: "#ff889c" }} to="/register">
+            here
+          </Link>
+        </p>
+      </Form>
     </div>
   );
 };

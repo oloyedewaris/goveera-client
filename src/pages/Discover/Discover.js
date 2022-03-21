@@ -10,10 +10,9 @@ const Discover = () => {
   const [users, setUsers] = useState([])
   const [limit, setLimit] = useState(8);
   const [count, setCount] = useState(null);
-  const [usersLoading, setUsersLoading] = useState(false)
+  const [usersLoading, setUsersLoading] = useState(true)
 
   useEffect(() => {
-    setUsersLoading(true)
     getUsers(limit);
   }, [limit]);
 

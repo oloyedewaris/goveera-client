@@ -13,16 +13,14 @@ function Auth(Component) {
     const user = useSelector((state) => state.auth.user);
     const token = localStorage.getItem('token')
 
-
     useEffect(() => {
       if (!isAuthenticated && token) {
         setLoading(true)
         axiosInstance.get("/api/auth/authenticate")
           .then(res => {
-            console.log('res.data', res.data)
             if (res.data) {
               setLoading(val => {
-                dispatch(setUser(res.data))
+                if (res.data) dispatch(setUser(res.data))
                 return false
               })
             }
@@ -39,7 +37,7 @@ function Auth(Component) {
           <Spinner />
           : <>{isAuthenticated ?
             <>
-              {isAuthenticated && user.role === 1 && !user.company ?
+              {isAuthenticated && !user.company ?
                 <>
                   <Redirect to='/register/company' />
                 </>
