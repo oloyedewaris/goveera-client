@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { AutoComplete, Input } from 'antd';
 import axiosInstance from '../../util/axiosInstance';
 import { useHistory } from "react-router-dom";
+import toastInstance from '../../util/toastInstance';
+import ToastComponent from '../ToastComponent/ToastComponent';
 
 const Search = () => {
   const history = useHistory()
@@ -26,7 +28,7 @@ const Search = () => {
         setOptions(users)
       })
       .catch(err => {
-        alert("Can't search user")
+        toastInstance("Can't search user")
         console.log(err)
       })
   };
@@ -42,6 +44,7 @@ const Search = () => {
       >
         <Input.Search size="large" placeholder="Search user..." />
       </AutoComplete>
+      <ToastComponent />
     </div>
   );
 };

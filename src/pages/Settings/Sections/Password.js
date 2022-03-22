@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Input, Button, Alert } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { changeSettings } from "../../../redux/actions/authActions";
+import toastInstance from "../../../util/toastInstance";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 
-function Password() {
+function Password({ toggleModal }) {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user._id);
   const error = useSelector(state => state.error);
@@ -41,7 +43,10 @@ function Password() {
       type: "passwordChange"
     };
     if (NewPassword === ConfirmPassword) {
-      dispatch(changeSettings(newUpdate));
+      dispatch(changeSettings(newUpdate)(() => {
+        toggleModal(false)
+        toastInstance('Settings Updated')
+      }));
       setError(null);
     } else {
       setError("Password don't match");
@@ -76,6 +81,7 @@ function Password() {
         </div>
         <Button onClick={onButtonClick}>Done</Button>
       </div>
+      <ToastComponent />
     </div>
   );
 }

@@ -8,6 +8,8 @@ import ProfileFeeds from "./ProfileFeeds";
 import Spinner from "../../components/Spinner/Spinner";
 import Upload from "./UploadImage";
 import './Profile.less';
+import toastInstance from "../../util/toastInstance";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const { Meta } = Card;
 const Profile = () => {
@@ -26,7 +28,7 @@ const Profile = () => {
       })
       .catch(err => {
         setLoading(false)
-        alert("Can't get user's profile")
+        toastInstance("Can't get user's profile", true)
       })
   }, [userId]);
 
@@ -82,6 +84,7 @@ const Profile = () => {
           <Button style={{ margin: '10px 15px', float: 'right' }}><Link to="/discover">Discover Users</Link></Button>
           <ProfileFeeds user={user} />
         </div>}
+      <ToastComponent />
     </div>
   );
 };

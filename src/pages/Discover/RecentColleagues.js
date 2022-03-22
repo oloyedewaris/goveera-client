@@ -5,6 +5,8 @@ import { Link } from "react-router-dom"
 import axiosInstance from "../../util/axiosInstance";
 import { UsergroupDeleteOutlined, EyeOutlined, UserOutlined } from "@ant-design/icons"
 import truncString from "../../util/truncString";
+import toastInstance from "../../util/toastInstance";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const Colleagues = () => {
   const { Meta } = Card;
@@ -19,7 +21,7 @@ const Colleagues = () => {
         setColleaguesLoading(false)
       })
       .catch(err => {
-        alert("Can't get colleagues")
+        toastInstance("Can't get colleagues", true)
         setColleaguesLoading(false)
       })
   }, [])
@@ -34,9 +36,9 @@ const Colleagues = () => {
       .then(res => {
         if (res.data.deleted)
           getColleagues();
-        alert("User removed")
+        toastInstance("User removed")
       })
-      .catch(err => alert("Can't remove user"));
+      .catch(err => toastInstance("Can't remove user", true));
   }
 
   return (
@@ -73,6 +75,7 @@ const Colleagues = () => {
           )}
         </div>
       )}
+      <ToastComponent />
     </div>
   );
 };

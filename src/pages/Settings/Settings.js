@@ -25,16 +25,37 @@ function Settings() {
   return (
     <div style={{ margin: 15 }}>
       <List direction="vertical">
-        <List.Item><div>Name</div><div>{`${firstName} ${lastName}`}</div>
-          <Button onClick={() => { setComponent(<Name />); setModalToggle(true) }} size="sm">Edit</Button>
+        <List.Item>
+          <div>Name</div>
+          <div>{`${firstName} ${lastName}`}</div>
+          <Button onClick={() => {
+            setComponent(<Name toggleModal={setModalToggle} />);
+            setModalToggle(true)
+          }} size="sm">Edit</Button>
         </List.Item>
-        <List.Item><div>Email Address</div><div>{email}</div>
-          <Button onClick={() => { setComponent(<Email />); setModalToggle(true) }} size="sm">Edit</Button>
+        <List.Item>
+          <div>Email Address</div>
+          <div>{email}</div>
+          <Button onClick={() => {
+            setComponent(<Email toggleModal={setModalToggle} />);
+            setModalToggle(true)
+          }} size="sm">Edit</Button>
         </List.Item>
-        <List.Item><div>Bio</div><div>{bio}</div><Button onClick={() => { setComponent(<Bio />); setModalToggle(true) }} size="sm">Edit</Button>
+        <List.Item>
+          <div>Bio</div>
+          <div>{bio}</div>
+          <Button onClick={() => {
+            setComponent(<Bio toggleModal={setModalToggle} />);
+            setModalToggle(true)
+          }} size="sm">Edit</Button>
         </List.Item>
-        <List.Item><div>Password</div><h5>If you feel someone else's got your password, you can change it below</h5>
-          <Button onClick={() => { setComponent(<Password />); setModalToggle(true) }} size="sm">Change Password</Button>
+        <List.Item>
+          <div>Password</div>
+          <h5>If you feel someone else's got your password, you can change it below</h5>
+          <Button onClick={() => {
+            setComponent(<Password toggleModal={setModalToggle} />);
+            setModalToggle(true)
+          }} size="sm">Change Password</Button>
         </List.Item>
       </List>
       <Button style={{ color: "red" }}>

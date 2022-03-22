@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Input, Button, Alert } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { changeSettings } from "../../../redux/actions/authActions";
+import toastInstance from "../../../util/toastInstance";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 
-function Email() {
+function Email({ toggleModal }) {
   const dispatch = useDispatch();
   const email = useSelector(state => state.auth.user.email);
   const userId = useSelector(state => state.auth.user._id);
@@ -36,7 +38,10 @@ function Email() {
       type: "dataChange"
     };
 
-    dispatch(changeSettings(newUpdate));
+    dispatch(changeSettings(newUpdate)(() => {
+      toggleModal(false)
+      toastInstance('Settings Updated')
+    }));
     setError(null);
   };
 
@@ -54,6 +59,7 @@ function Email() {
         </div>
         <Button onClick={onButtonClick}>Done</Button>
       </div>
+      <ToastComponent />
     </div>
   );
 }

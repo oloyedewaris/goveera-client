@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Navbar from "./components/NavBar/Navbar";
 import Spinner from "./components/Spinner/Spinner";
 import large from "./hoc/largeScreenWrapper";
+import ToastComponent from "./components/ToastComponent/ToastComponent";
 import auth from "./hoc/auth";
 
 //pages
@@ -28,6 +29,7 @@ import SavedItem from "./pages/Saves/SavedItem";
 import Whoops404 from "./util/Whoops404";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Privacy from "./pages/MyBudget/Privacy"
+import 'react-toastify/dist/ReactToastify.css';
 import './App.less';
 
 //fallback loading
@@ -70,6 +72,7 @@ const App = () => {
         </ScrollToTop>
       </div>
       <Footer />
+      <ToastComponent />
     </React.Suspense>
   );
 };

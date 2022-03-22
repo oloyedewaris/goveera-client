@@ -11,6 +11,8 @@ import { saveItem } from "../../redux/actions/authActions";
 import Comments from "./sections/Comments";
 import CommentInput from "./sections/CommentInput";
 import Spinner from "../../components/Spinner/Spinner";
+import toastInstance from "../../util/toastInstance";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const Post = () => {
   TimeAgo.addLocale(en);
@@ -78,8 +80,14 @@ const Post = () => {
                   <Menu.Item
                     onClick={() =>
                       auth.user.saves.find((save) => save.link === `/post/${post._id}`) ?
-                        dispatch(saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text })) :
-                        dispatch(saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text, action: 'save' }))
+                        dispatch(
+                          saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text })
+                            (() => toastInstance('Post unsaved'))
+                        ) :
+                        dispatch(
+                          saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text, action: 'save' })
+                            (() => toastInstance('Post saved')))
+
                     }
                     key="4"
                     icon={<TagOutlined />}>
@@ -139,6 +147,7 @@ const Post = () => {
           )}
         </animated.div>)
       }
+      <ToastComponent />
     </div>
   );
 };

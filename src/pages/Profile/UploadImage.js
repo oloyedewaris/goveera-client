@@ -3,6 +3,8 @@ import { Input, Alert, Space } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
 import { changeSettings } from "../../redux/actions/authActions"
+import toastInstance from "../../util/toastInstance";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const { Search } = Input
 
@@ -57,7 +59,7 @@ const UploadImage = ({ onClose }) => {
         profilePic: imageUrl,
         password
       }
-      dispatch(changeSettings(data))
+      dispatch(changeSettings(data)(() => toastInstance('Image Uploaded')))
       setTimeout(() => {
         onClose()
       }, 2500);
@@ -84,6 +86,7 @@ const UploadImage = ({ onClose }) => {
           onSearch={submit}
         />
       </Space>
+      <ToastComponent />
     </div>
   );
 }

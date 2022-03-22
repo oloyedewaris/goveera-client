@@ -68,13 +68,11 @@ export default function reducer(state = initialState, action) {
         isAuthenticated: false
       };
     case CHANGE_SETTINGS:
-      alert("Settings updated succesfully");
       return {
         ...state,
         user: action.payload,
       };
     case SAVE_ITEM:
-      alert("Done")
       return {
         ...state,
         user: action.payload,

@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom"
 import Spinner from "../../components/Spinner/Spinner";
 import { clearNotifications } from "../../redux/actions/authActions"
+import toastInstance from '../../util/toastInstance';
+import ToastComponent from '../../components/ToastComponent/ToastComponent';
 
 function Notifications() {
   TimeAgo.addLocale(en);
@@ -16,7 +18,7 @@ function Notifications() {
 
   useEffect(() => {
     return () => {
-      dispatch(clearNotifications())
+      dispatch(clearNotifications(() => toastInstance('Notification not cleared')))
     }
   }, [dispatch])
 
@@ -79,6 +81,7 @@ function Notifications() {
             <Spinner />
           </div>
         )}
+      <ToastComponent />
     </div>
   )
 }

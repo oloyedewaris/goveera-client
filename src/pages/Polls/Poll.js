@@ -11,6 +11,8 @@ import { saveItem } from "../../redux/actions/authActions";
 import Comments from "./sections/Comments";
 import CommentInput from "./sections/CommentInput";
 import Spinner from "../../components/Spinner/Spinner"
+import toastInstance from "../../util/toastInstance";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const Poll = () => {
   TimeAgo.addLocale(en);
@@ -114,8 +116,14 @@ const Poll = () => {
                     <Menu.Item
                       onClick={() =>
                         auth.user.saves.find((save) => save.link === `/poll/${poll._id}`) ?
-                          dispatch(saveItem({ type: 'poll', link: `/poll/${poll._id}`, title: poll.question })) :
-                          dispatch(saveItem({ type: 'poll', link: `/poll/${poll._id}`, title: poll.question, action: 'save' }))
+                          dispatch(
+                            saveItem({ type: 'poll', link: `/poll/${poll._id}`, title: poll.question })
+                              (() => toastInstance('Poll unsaved'))
+                          ) :
+                          dispatch(
+                            saveItem({ type: 'poll', link: `/poll/${poll._id}`, title: poll.question, action: 'save' })
+                              (() => toastInstance('Poll saved'))
+                          )
                       }
                       key="4"
                       icon={<TagOutlined />}>
@@ -179,8 +187,8 @@ const Poll = () => {
             </div>
           )}
         </animated.div>)}
+      <ToastComponent />
     </div>
-
   );
 };
 

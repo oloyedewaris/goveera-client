@@ -5,6 +5,8 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../redux/actions/authActions";
 import { BACKEND_URL } from '../../util/constants'
+import toastInstance from "../../util/toastInstance";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 const { Option } = Select;
 
 const RegisterUser = () => {
@@ -34,7 +36,7 @@ const RegisterUser = () => {
   useEffect(() => {
     axios.get(`${BACKEND_URL}/api/company/get_all_companies`)
       .then(res => setCompanies(res.data))
-      .catch(err => alert("Can't get companies"))
+      .catch(err => toastInstance("Can't get companies", true))
   }, []);
 
   useEffect(() => {
@@ -164,6 +166,7 @@ const RegisterUser = () => {
           </Link>
         </p>
       </Form>
+      <ToastComponent />
     </div>
   );
 };

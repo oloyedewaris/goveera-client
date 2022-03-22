@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Input, Button, Alert } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { changeSettings } from "../../../redux/actions/authActions";
+import toastInstance from "../../../util/toastInstance";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 
-function Name() {
+function Name({ toggleModal }) {
   const dispatch = useDispatch();
   const firstName = useSelector(state => state.auth.user.firstName);
   const lastName = useSelector(state => state.auth.user.lastName);
@@ -15,9 +17,7 @@ function Name() {
   const [Password, setPassword] = useState("");
 
   useEffect(() => {
-    if (error.id === "CHANGE_SETTINGS_FAILED") {
-      setError(error.msg);
-    }
+    if (error.id === "CHANGE_SETTINGS_FAILED") setError(error.msg);
   }, [error]);
 
   const onFirstNameChange = e => {
@@ -44,7 +44,10 @@ function Name() {
       type: "dataChange"
     };
 
-    dispatch(changeSettings(newUpdate));
+    dispatch(changeSettings(newUpdate)(() => {
+      toggleModal(false)
+      toastInstance('Settings updated')
+    }));
     setError(null);
   };
 
@@ -66,6 +69,7 @@ function Name() {
         </div>
         <Button onClick={onButtonClick}>Done</Button>
       </div>
+      <ToastComponent />
     </div>
   );
 }

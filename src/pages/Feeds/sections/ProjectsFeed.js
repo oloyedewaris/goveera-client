@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { LikeOutlined, LikeFilled, DislikeFilled, DislikeOutlined, CommentOutlined, DeleteTwoTone, TagOutlined, EyeOutlined, LinkOutlined, UserOutlined } from "@ant-design/icons";
 import { getProjects, updateProject, deleteProject } from "../../../redux/actions/projectActions";
 import { saveItem } from "../../../redux/actions/authActions";
+import toastInstance from "../../../util/toastInstance";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 
 const ProjectsFeed = () => {
   TimeAgo.addLocale(en);
@@ -92,8 +94,14 @@ const ProjectsFeed = () => {
                           <Menu.Item
                             onClick={() =>
                               auth.user.saves.find((save) => save.link === `/project/${project._id}`) ?
-                                dispatch(saveItem({ type: 'project', link: `/project/${project._id}`, title: project.question })) :
-                                dispatch(saveItem({ type: 'project', link: `/project/${project._id}`, title: project.question, action: 'save' }))
+                                dispatch(
+                                  saveItem({ type: 'project', link: `/project/${project._id}`, title: project.question })
+                                    (() => toastInstance('Project unsaved'))
+                                ) :
+                                dispatch(
+                                  saveItem({ type: 'project', link: `/project/${project._id}`, title: project.question, action: 'save' })
+                                    (() => toastInstance('Project saved'))
+                                )
                             }
                             key="4"
                             icon={<TagOutlined />}>
@@ -134,6 +142,7 @@ const ProjectsFeed = () => {
           ) : null}
         </div >
       )}
+      <ToastComponent />
     </div >
   );
 };

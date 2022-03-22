@@ -4,6 +4,8 @@ import { UserOutlined } from "@ant-design/icons"
 import axiosInstance from "../../util/axiosInstance";
 import { Link } from "react-router-dom"
 import truncString from "../../util/truncString";
+import toastInstance from "../../util/toastInstance";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const Discover = () => {
   const { Meta } = Card;
@@ -24,7 +26,7 @@ const Discover = () => {
         setUsersLoading(false)
       })
       .catch(err => {
-        alert("Can't get users")
+        toastInstance("Can't get users")
         setUsersLoading(false)
       });
   }
@@ -61,6 +63,7 @@ const Discover = () => {
         </div>
       )}
       {users.length > 0 && Number(count) > users.length && <Button className="load_more" onClick={onLoadMore}>Load More</Button>}
+      <ToastComponent />
     </div>
   );
 };

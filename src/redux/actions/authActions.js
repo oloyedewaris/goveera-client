@@ -87,7 +87,7 @@ export const registerCompany = body => dispatch => {
 };
 
 //clear notifications
-export const clearNotifications = () => (dispatch, getState) => {
+export const clearNotifications = (callBack) => (dispatch, getState) => {
   axiosInstance
     .get("/api/users/clear_notifications")
     .then((res) => {
@@ -98,11 +98,11 @@ export const clearNotifications = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      alert('notification not succesfully cleared')
+      callBack()
     });
 }
 
-export const saveItem = data => dispatch => {
+export const saveItem = data => callBack => dispatch => {
   axiosInstance
     .post("/api/users/save", data)
     .then((res) => {
@@ -111,14 +111,15 @@ export const saveItem = data => dispatch => {
         type: SAVE_ITEM,
         payload: res.data,
       });
+      callBack()
     })
     .catch((err) => {
-      alert('Saved to favourite')
+      alert('Unable to save')
     });
 }
 
 // Change settings
-export const changeSettings = data => dispatch => {
+export const changeSettings = data => callBack => dispatch => {
   const { userId, bio, email, firstName, lastName, password, newPassword, type, profilePic } = data
   const body = { bio, email, firstName, lastName, password, newPassword, profilePic }
 
@@ -129,6 +130,7 @@ export const changeSettings = data => dispatch => {
         type: CHANGE_SETTINGS,
         payload: res.data,
       });
+      callBack()
     })
     .catch((err) => {
       if (err.response) {

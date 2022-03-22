@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { CommentOutlined, DeleteTwoTone, HeartOutlined, HeartFilled, EyeOutlined, LinkOutlined, TagOutlined, UserOutlined, PushpinOutlined } from "@ant-design/icons";
 import { getPosts, updatePostLikes, deletePost } from "../../../redux/actions/postActions";
 import { saveItem } from "../../../redux/actions/authActions";
+import toastInstance from "../../../util/toastInstance";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 
 const PostsFeed = () => {
   TimeAgo.addLocale(en);
@@ -83,8 +85,14 @@ const PostsFeed = () => {
                         <Menu.Item
                           onClick={() =>
                             auth.user.saves.find((save) => save.link === `/post/${post._id}`) ?
-                              dispatch(saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text })) :
-                              dispatch(saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text, action: 'save' }))
+                              dispatch(
+                                saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text })
+                                  (() => toastInstance('Post unsaved'))
+                              ) :
+                              dispatch(
+                                saveItem({ type: 'post', link: `/post/${post._id}`, title: post.text, action: 'save' })
+                                  (() => toastInstance('Post saved'))
+                              )
                           }
                           key="4"
                           icon={<TagOutlined />}>
@@ -125,6 +133,7 @@ const PostsFeed = () => {
           ) : null}
         </div>
       )}
+      <ToastComponent />
     </div>
   );
 };
