@@ -20,6 +20,7 @@
     "core-js": "^3.12.1",
     "craco-less": "^1.20.0",
     "customize-cra": "^1.0.0",
+    "firebase": "^9.6.10",
     "form-data": "^4.0.0",
     "javascript-time-ago": "^2.3.5",
     "react": "^17.0.2",
@@ -51,7 +52,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://goveera-server.herokuapp.com/",
   "devDependencies": {
     "autoprefixer": "^10.2.6",
     "gulp": "^4.0.2",

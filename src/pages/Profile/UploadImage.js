@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Input, Alert, Space } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Input, Alert, Space, Progress } from 'antd';
+import { LinkOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from "react-redux";
+import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage'
+import { storage } from "../../util/firebase"
 import { changeSettings } from "../../redux/actions/authActions"
 import toastInstance from "../../util/toastInstance";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
@@ -16,6 +18,7 @@ const UploadImage = ({ onClose }) => {
   const [imageLoading, setImageLoading] = useState(false)
   const [error, setError] = useState(null)
   const [password, setPassword] = useState('')
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     if (serverError.id === 'CHANGE_SETTINGS_FAILED') {
@@ -23,47 +26,50 @@ const UploadImage = ({ onClose }) => {
     }
   }, [serverError])
 
-  const handleChange = file => {
-    setError(null)
-    if (file[0].size > 5500000)
-      return setError('file too large, supports maximum of 5MB')
+  const handleImageAsFile = (e) => {
+    const image = e.target.files[0]
     setImageLoading(true)
-    const form = new FormData();
-    form.append("file", file[0])
-    form.append("upload_preset", "p3fwqgyn")
-    fetch("https://api.cloudinary.com/v1_1/govtech/image/upload", {
-      method: "post",
-      mode: "cors",
-      body: form
-    }).then(res => res.json())
-      .then(data => {
-        const link = (`https://res.cloudinary.com/govtech/image/upload/v${data.version}/${data.public_id}.png`)
-        setImageUrl(link)
+    console.log(image)
+    if (!image) {
+      setImageLoading(false)
+      return
+    }
+    const storageRef = ref(storage, `/files/${Date.now()}/${image.name}`)
+    const uploadTask = uploadBytesResumable(storageRef, image)
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+        setProgress(prog)
+      },
+      err => {
+        setError('An error occurred while uploading image, try again')
         setImageLoading(false)
-      })
-      .catch(err => {
-        setImageUrl(null)
-        setError('An error occured while uploading image, try again')
+        console.log('err', err)
+      },
+      () => {
         setImageLoading(false)
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then(url => setImageUrl(url))
+          .catch(err => setError("Can't get image link try again"))
       })
-  };
+  }
 
   const submit = () => {
     setError(null)
-    if (!password || !imageUrl) {
-      setError('Choose an image and enter password')
-    } else {
-      const data = {
-        userId: user._id,
-        type: 'dataChange',
-        profilePic: imageUrl,
-        password
-      }
-      dispatch(changeSettings(data)(() => toastInstance('Image Uploaded')))
-      setTimeout(() => {
-        onClose()
-      }, 2500);
+    if (!password || !imageUrl)
+      return setError('Upload an image and enter password')
+    const data = {
+      userId: user._id,
+      type: 'dataChange',
+      profilePic: imageUrl,
+      password
     }
+    dispatch(changeSettings(data)(() => {
+      setImageUrl(null)
+      toastInstance('Image Uploaded')
+      onClose()
+    }))
   }
 
   const onPassword = (e) => {
@@ -75,15 +81,23 @@ const UploadImage = ({ onClose }) => {
     <div className='upload_image_con'>
       {error && <Alert className="alert" message={error} type="error" closable onClose={() => setError(null)} />}
       {imageUrl && <img src={imageUrl} alt='avatar' className='upload_image' />}
-      {imageLoading ? <LoadingOutlined /> : <input accept='image/*' type="file" onChange={(e) => handleChange(e.target.files)} />}
+      {imageLoading && <Progress type='circle' percent={progress} width={80} />}
+      {imageUrl &&
+        <Alert className="alert" message='Image uploaded, enter password to continue' type="success" closable />}
       <Space direction="vertical">
         <Search
           value={password}
           type='password'
           placeholder='Enter your password'
           onChange={onPassword}
-          enterButton="Upload"
-          onSearch={submit}
+          enterButton={
+            imageUrl ? 'Upload' :
+              <label>
+                <input style={{ display: 'none' }} accept='image/*' type="file" onChange={handleImageAsFile} />
+                <LinkOutlined size={20} />
+              </label>
+          }
+          onSearch={imageUrl && submit}
         />
       </Space>
       <ToastComponent />
