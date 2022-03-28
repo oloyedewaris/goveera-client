@@ -61,13 +61,16 @@ const LandingPage = () => {
         <Col xs={24} sm={24} md={20} lg={12}>
           <div className='landing_list_con' >
             <div className='landing_list_subcon'>
-              <div className='landing_list_dot' /><div className='landing_list_item'>Communicate and make announcements through forum</div>
+              <div className='landing_list_dot' />
+              <div className='landing_list_item'>Communicate and make announcements without stress</div>
             </div>
             <div className='landing_list_subcon'>
-              <div className='landing_list_dot' /><div className='landing_list_item'>Record projects for ideas, feedbacks and recommendations</div>
+              <div className='landing_list_dot' />
+              <div className='landing_list_item'>Record projects to get feedbacks and opinions</div>
             </div>
             <div className='landing_list_subcon'>
-              <div className='landing_list_dot' /><div className='landing_list_item'>Conduct polls for quick survey</div>
+              <div className='landing_list_dot' />
+              <div className='landing_list_item'>Conduct polls for quick survey</div>
             </div>
           </div>
         </Col>

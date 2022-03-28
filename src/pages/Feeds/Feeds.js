@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs, Modal } from "antd";
 import { useLocation, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Create from "../../components/Create/Create"
 import PostsFeed from "./sections/PostsFeed";
 import PollsFeed from "./sections/PollsFeed";
 import ProjectsFeed from "./sections/ProjectsFeed";
+import { clearJustCreated } from '../../redux/actions/authActions'
 import CreateNew from "./CreateNew";
 import "./feeds.less";
 
 const Feeds = () => {
   const location = useLocation()
   const history = useHistory()
+  const user = useSelector(state => state.auth.user)
+  const dispatch = useDispatch()
   const [toggle, setToggle] = useState(false)
+  const [toggleCreate, setToggleCreate] = useState(false)
+
+  useEffect(() => {
+    if (user?.justCreated) {
+      setToggle(true)
+    }
+  }, [user?.justCreated])
+
+  const closeModal = () => {
+    setToggle(false)
+    dispatch(clearJustCreated())
+  }
 
   const onTabChange = (key) => {
     history.push(`/home${key}`)
@@ -20,11 +36,11 @@ const Feeds = () => {
   const { TabPane } = Tabs;
   return (
     <div className="feeds_container">
-      <div onClick={() => setToggle(!toggle)}>
+      <div onClick={() => setToggleCreate(!toggleCreate)}>
         <CreateNew />
       </div>
       <Tabs onChange={onTabChange} defaultActiveKey={location.search} >
-        <TabPane tab="Forum" key="?tab=post">
+        <TabPane tab="Discussions" key="?tab=post">
           <PostsFeed />
         </TabPane>
         <TabPane tab="Polls" key="?tab=poll">
@@ -34,9 +50,14 @@ const Feeds = () => {
           <ProjectsFeed />
         </TabPane>
       </Tabs>
-      <Modal title="Create a New Post" visible={toggle} onCancel={() => setToggle(false)}>
-        <Create onClose={() => setToggle(false)} />
+      <Modal title="Create a New Post" visible={toggleCreate} onCancel={() => setToggleCreate(false)}>
+        <Create onClose={() => setToggleCreate(false)} />
       </Modal>
+      {user?.justCreated &&
+        <Modal title="Welcome to Goveera" visible={toggle} onCancel={closeModal}>
+          <p>Hurray, Welcome</p>
+        </Modal>}
+
     </div>
   );
 };

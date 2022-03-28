@@ -96,9 +96,14 @@ const RegisterUser = () => {
     dispatch(register(newUser));
   };
 
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  }
+
   return (
     <div className="container">
-      <Form className="form" form={formHook}>
+      <Form {...layout} className="form" form={formHook}>
         <h2>Create a Free Account</h2>
         <Form.Item label="First Name" name="first name">
           <span style={{ fontSize: 12, color: 'red', marginBottom: 0 }}>{firstName.error}</span>

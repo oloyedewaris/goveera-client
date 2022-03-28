@@ -26,18 +26,16 @@ export const getPolls = () => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response) {
-        dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "GETTING_POLLS_FAILED"
-          )
-        );
-        dispatch({
-          type: GET_POLLS_FAILED
-        });
-      }
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "GETTING_POLLS_FAILED"
+        )
+      );
+      dispatch({
+        type: GET_POLLS_FAILED
+      });
     });
 };
 
@@ -53,18 +51,16 @@ export const createPoll = body => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response) {
-        dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "CREATE_POLLS_FAILED"
-          )
-        );
-        dispatch({
-          type: CREATE_POLL_FAILED
-        });
-      }
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "CREATE_POLL_FAILED"
+        )
+      );
+      dispatch({
+        type: CREATE_POLL_FAILED
+      });
     });
 };
 
@@ -85,14 +81,13 @@ export const updatePoll = ({ pollId, optionName, action }) => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "UPDATE_POLL_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "UPDATE_POLL_FAILED"
+        )
+      );
     });
 };
 
@@ -108,14 +103,13 @@ export const addComment = (pollId, action, commenterId, text) => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "ADD_COMMENT_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "ADD_COMMENT_FAILED"
+        )
+      );
     });
 };
 
@@ -131,14 +125,13 @@ export const deleteComment = (pollId, commentId, action) => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "DELETE_COMMENT_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "DELETE_COMMENT_FAILED"
+        )
+      );
     });
 };
 
@@ -152,13 +145,12 @@ export const deletePoll = pollId => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "DELETE_POLL_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "DELETE_POLL_FAILED"
+        )
+      );
     });
 };

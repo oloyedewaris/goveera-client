@@ -21,10 +21,13 @@ export const getProjects = () => (dispatch) => {
     .get("/api/projects")
     .then(res => dispatch({ type: GET_PROJECTS, payload: res.data }))
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(err.response.data, err.response.status, "GETTING_PROJECTS_FAILED")
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "GET_PROJECTS_FAILED"
+        )
+      );
       dispatch({ type: GET_PROJECTS_FAILED });
     });
 };
@@ -40,18 +43,16 @@ export const createProject = body => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response) {
-        dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "CREATE_PROJECT_FAILED"
-          )
-        );
-        dispatch({
-          type: CREATE_PROJECT_FAILED
-        });
-      }
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "CREATE_PROJECT_FAILED"
+        )
+      );
+      dispatch({
+        type: CREATE_PROJECT_FAILED
+      });
     });
 };
 
@@ -74,14 +75,13 @@ export const updateProject = ({ projectId, action, stage, taskName }) => (dispat
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "UPDATE_PROJECT_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "UPDATE_PROJECT_FAILED"
+        )
+      );
     });
 };
 
@@ -97,14 +97,13 @@ export const addComment = ({ projectId, action, commenterId, text }) => (dispatc
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "ADD_PROJECT_COMMENT_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "ADD_PROJECT_COMMENT_FAILED"
+        )
+      );
     });
 };
 
@@ -122,14 +121,13 @@ export const deleteComment = ({ projectId, commentId, action }) => (
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "DELETE_PROJECT_COMMENT_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "DELETE_PROJECT_COMMENT_FAILED"
+        )
+      );
     });
 };
 
@@ -143,13 +141,12 @@ export const deleteProject = projectId => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "DELETE_PROJECT_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "DELETE_PROJECT_FAILED"
+        )
+      );
     });
 };

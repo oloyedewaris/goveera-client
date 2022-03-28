@@ -9,7 +9,8 @@ import {
   REGISTER_COMPANY_SUCCESS,
   REGISTER_COMPANY_FAILED,
   CLEAR_NOTIFICATIONS,
-  SAVE_ITEM
+  SAVE_ITEM,
+  CLEAR_JUST_CREATED
 } from "./types";
 import axios from 'axios';
 import axiosInstance from "../../util/axiosInstance";
@@ -25,6 +26,18 @@ export const setUser = data => dispatch => {
   });
 };
 
+export const clearJustCreated = () => dispatch => {
+  axiosInstance
+    .get(`${BACKEND_URL}/api/users/clear_just_created`)
+    .then((res) => {
+      dispatch(clearErrors());
+      dispatch({
+        type: CLEAR_JUST_CREATED,
+        payload: res.data,
+      });
+    })
+};
+
 //Log user in
 export const login = body => dispatch => {
   axios
@@ -37,14 +50,16 @@ export const login = body => dispatch => {
       });
     })
     .catch((err) => {
-      if (err.response) {
-        dispatch(
-          getErrors(err.response.data, err.response.status, "LOGIN_FAILED")
-        );
-        dispatch({
-          type: LOGIN_FAILED,
-        });
-      }
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "LOGIN_FAILED"
+        )
+      );
+      dispatch({
+        type: LOGIN_FAILED,
+      });
     });
 };
 
@@ -60,10 +75,16 @@ export const register = body => dispatch => {
       });
     })
     .catch((err) => {
-      if (err.response) {
-        dispatch(getErrors(err.response.data, err.response.status, "REGISTER_FAILED"));
-      }
-      dispatch({ type: REGISTER_FAILED });
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "REGISTER_FAILED"
+        )
+      );
+      dispatch({
+        type: REGISTER_FAILED,
+      });
     });
 };
 
@@ -79,10 +100,16 @@ export const registerCompany = body => dispatch => {
       });
     })
     .catch((err) => {
-      if (err.response) {
-        dispatch(getErrors(err.response.data, err.response.status, "REGISTER_COMPANY_FAILED"));
-      }
-      dispatch({ type: REGISTER_COMPANY_FAILED });
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "REGISTER_COMPANY_FAILED"
+        )
+      );
+      dispatch({
+        type: REGISTER_COMPANY_FAILED,
+      });
     });
 };
 
@@ -133,15 +160,13 @@ export const changeSettings = data => callBack => dispatch => {
       callBack()
     })
     .catch((err) => {
-      if (err.response) {
-        dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "CHANGE_SETTINGS_FAILED"
-          )
-        );
-      }
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "CHANGE_SETTINGS_FAILED"
+        )
+      );
     });
 };
 

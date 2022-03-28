@@ -26,14 +26,13 @@ export const getPosts = () => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "GETTING_POSTS_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "GETTING_POSTS_FAILED"
+        )
+      );
       dispatch({
         type: GET_POSTS_FAILED
       });
@@ -52,18 +51,16 @@ export const createPost = body => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response) {
-        dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "CREATE_POSTS_FAILED"
-          )
-        );
-        dispatch({
-          type: CREATE_POST_FAILED
-        });
-      }
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "CREATE_POSTS_FAILED"
+        )
+      );
+      dispatch({
+        type: CREATE_POST_FAILED
+      });
     });
 };
 
@@ -85,14 +82,13 @@ export const updatePostLikes = ({ postId, action }) => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "UPDATE_POST_LIKES_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "UPDATE_POST_LIKES_FAILED"
+        )
+      );
     });
 };
 
@@ -108,14 +104,13 @@ export const addComment = (postId, action, commenterId, text) => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "ADD_COMMENT_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "ADD_COMMENT_FAILED"
+        )
+      );
     });
 };
 
@@ -131,14 +126,13 @@ export const deleteComment = (postId, commentId, action) => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "DELETE_COMMENT_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "DELETE_COMMENT_FAILED"
+        )
+      );
     });
 };
 
@@ -152,13 +146,12 @@ export const deletePost = postId => (dispatch) => {
       })
     )
     .catch(err => {
-      if (err.response)
-        return dispatch(
-          getErrors(
-            err.response.data,
-            err.response.status,
-            "DELETE_POST_FAILED"
-          )
-        );
+      dispatch(
+        getErrors(
+          err?.response?.data || 'Something went wrong, try again',
+          err?.response?.status || '000',
+          "DELETE_POST_FAILED"
+        )
+      );
     });
 };

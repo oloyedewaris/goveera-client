@@ -37,7 +37,7 @@ const MobileMenu = () => {
         <div>
           <a href="/"><img className="logo_img" alt="goveera_logo" src={logo} /></a>
         </div>
-        <div style={{ width: '70%', display: 'flex', justifyContent: 'space-around' }}>
+        <div style={{ width: '40%', display: 'flex', justifyContent: 'space-around' }}>
           <Button className='menu_item my_button'>
             <NavLink exact to="/login">Signin</NavLink>
           </Button>

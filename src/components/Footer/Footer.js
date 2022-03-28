@@ -2,13 +2,13 @@ import React from "react";
 import { Col, Row } from 'antd'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/logo.png'
-import { FacebookOutlined, InstagramOutlined, TwitterOutlined, YoutubeOutlined } from '@ant-design/icons'
+// import { FacebookOutlined, InstagramOutlined, TwitterOutlined, YoutubeOutlined } from '@ant-design/icons'
 import './footer.less';
 
-const iconStyle = {
-  fontSize: 25,
-  margin: 5
-}
+// const iconStyle = {
+//   fontSize: 25,
+//   margin: 5
+// }
 
 function Footer() {
   return (
@@ -18,12 +18,12 @@ function Footer() {
           <div style={{ flexDirection: 'row' }}>
             <img className='footer_logo' src={logo} alt='logo' /> <h2 style={{ marginLeft: 10 }} >Goveera</h2>
           </div>
-          <div style={{ flexDirection: 'row', marginTop: 15 }}>
+          {/* <div style={{ flexDirection: 'row', marginTop: 15 }}>
             <a href='https://facebook.com/Goveera'><FacebookOutlined style={iconStyle} /></a>
             <a href='https://instagram.com/governance_technology'><InstagramOutlined style={iconStyle} /></a>
             <a href='https://twitter.com/governance_tech'><TwitterOutlined style={iconStyle} /></a>
             <a href='https://youtube.com/waris_oloyede'> <YoutubeOutlined style={iconStyle} /></a>
-          </div>
+          </div> */}
           <div style={{ marginTop: 30 }}>
             <p>governancetechnology17@gmail.com</p>
             <p>+234 810 8745 769</p>

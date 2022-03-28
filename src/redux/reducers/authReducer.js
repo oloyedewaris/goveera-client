@@ -9,7 +9,8 @@ import {
   REGISTER_COMPANY_SUCCESS,
   REGISTER_COMPANY_FAILED,
   CLEAR_NOTIFICATIONS,
-  SAVE_ITEM
+  SAVE_ITEM,
+  CLEAR_JUST_CREATED
 } from "../actions/types";
 
 const initialState = {
@@ -25,6 +26,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         isAuthenticated: true,
         user: action.payload.user
+      };
+    case CLEAR_JUST_CREATED:
+      return {
+        ...state,
+        user: action.payload
       };
     case LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload?.token)
