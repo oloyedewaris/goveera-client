@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, List, Avatar, Skeleton, Popconfirm, Dropdown, Menu, } from "antd";
+import { List, Avatar, Skeleton, Popconfirm, Dropdown, Menu, Space } from "antd";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,26 +24,6 @@ const ProjectsFeed = () => {
     dispatch(getProjects());
   }, [dispatch]);
 
-  const onDeleteProject = (projectId) => {
-    dispatch(deleteProject(projectId));
-  };
-
-  const onSupportClick = ({ projectId }) => {
-    dispatch(updateProject({ projectId, action: "support" }));
-  };
-
-  const onUnsupportClick = ({ projectId }) => {
-    dispatch(updateProject({ projectId, action: "unsupport" }));
-  };
-
-  const onOpposeClick = ({ projectId }) => {
-    dispatch(updateProject({ projectId, action: "oppose" }));
-  };
-
-  const onUnopposeClick = ({ projectId }) => {
-    dispatch(updateProject({ projectId, action: "unoppose" }));
-  };
-
   return (
     <div>
       {projectLoading ? (
@@ -64,25 +44,27 @@ const ProjectsFeed = () => {
                       className="feeds_dropdown_bg"
                       key={i}
                       actions={[
-                        <Button style={{ margin: "5px" }} size="small" disabled={updatingProject}
+                        <Space style={{ margin: "5px" }} size="small" disabled={updatingProject}
                           onClick={() => project.supporters.includes(auth.user._id) ?
-                            onUnsupportClick({ projectId: project._id }) :
-                            onSupportClick({ projectId: project._id })} >
+                            dispatch(updateProject({ projectId: project._id, action: "unsupport" })) :
+                            dispatch(updateProject({ projectId: project._id, action: "support" }))} >
                           {`${project.supporters.length} `}
-                          {project.supporters.includes(auth.user._id) ? <LikeFilled style={{ color: "green" }} /> : <LikeOutlined style={{ color: "green" }} />}
-                          Support
-                        </Button>,
-                        <Button style={{ margin: "5px" }} size="small" disabled={updatingProject}
+                          {project.supporters.includes(auth.user._id) ?
+                            <LikeFilled style={{ color: "green" }} /> : <LikeOutlined style={{ color: "green" }} />}
+                        </Space>,
+                        <Space style={{ margin: "5px" }} size="small" disabled={updatingProject}
                           onClick={() => project.opposers.includes(auth.user._id) ?
-                            onUnopposeClick({ projectId: project._id }) :
-                            onOpposeClick({ projectId: project._id })} >
+                            dispatch(updateProject({ projectId: project._id, action: "unoppose" })) :
+                            dispatch(updateProject({ projectId: project._id, action: "oppose" }))} >
                           {`${project.opposers.length}`}
-                          {project.opposers.includes(auth.user._id) ? <DislikeFilled style={{ color: "red" }} /> : <DislikeOutlined style={{ color: "red" }} />}
-                          Oppose
-                        </Button>,
-                        <Button size="small"><Link to={`/project/${project._id}`}>
-                          {`${project.comments.length} `}<CommentOutlined /> Feedbacks
-                        </Link></Button>
+                          {project.opposers.includes(auth.user._id) ?
+                            <DislikeFilled style={{ color: "red" }} /> : <DislikeOutlined style={{ color: "red" }} />}
+                        </Space>,
+                        <Space size="small">
+                          <Link to={`/project/${project._id}`}>
+                            {`${project.comments.length} `}<CommentOutlined />
+                          </Link>
+                        </Space>
                       ]}>
                       <Dropdown.Button className="feeds_dropdown" overlay={
                         <Menu>
@@ -114,7 +96,7 @@ const ProjectsFeed = () => {
                             <Menu.Item style={{ color: "red" }} key="1"
                               icon={<DeleteTwoTone twoToneColor="red" />}>
                               <Popconfirm
-                                onConfirm={() => onDeleteProject(project._id)}
+                                onConfirm={() => dispatch(deleteProject(project._id))}
                                 placement="left"
                                 title="Are you sure you want to delete this project"
                                 okText="Yes"

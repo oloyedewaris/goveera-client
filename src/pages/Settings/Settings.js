@@ -34,7 +34,7 @@ function Settings() {
           }} size="sm">Edit</Button>
         </List.Item>
         <List.Item>
-          <div>Email Address</div>
+          <div>Email</div>
           <div>{email}</div>
           <Button onClick={() => {
             setComponent(<Email toggleModal={setModalToggle} />);

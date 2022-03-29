@@ -46,14 +46,6 @@ const Post = () => {
     }
   }, [posts, postId]);
 
-  const onLikeClick = ({ postId }) => {
-    dispatch(updatePostLikes({ postId, action: "like" }));
-  };
-
-  const onUnlikeClick = ({ postId }) => {
-    dispatch(updatePostLikes({ postId, action: "unlike" }));
-  };
-
   const onDeletePost = (postId) => {
     dispatch(deletePost(postId));
     history.push('/home')
@@ -116,9 +108,9 @@ const Post = () => {
                     style={{ cursor: 'pointer', color: '#ff889c' }}
                     onClick={() => {
                       if (!post.likers.includes(auth.user._id)) {
-                        onLikeClick({ postId: post._id });
+                        dispatch(updatePostLikes({ postId: post._id, action: "like" }));
                       } else {
-                        onUnlikeClick({ postId: post._id });
+                        dispatch(updatePostLikes({ postId: post._id, action: "unlike" }));
                       }
                     }}
                     text={`${post.likers.length}`} disabled={updatingPostLike}

@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Navbar from "./components/NavBar/Navbar";
 import Spinner from "./components/Spinner/Spinner";
 import large from "./hoc/largeScreenWrapper";
-import ToastComponent from "./components/ToastComponent/ToastComponent";
 import auth from "./hoc/auth";
 
 //pages
@@ -28,7 +27,6 @@ import Poll from "./pages/Polls/Poll";
 import SavedItem from "./pages/Saves/SavedItem";
 import Whoops404 from "./util/Whoops404";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import Privacy from "./pages/MyBudget/Privacy"
 import 'react-toastify/dist/ReactToastify.css';
 import './App.less';
 
@@ -66,13 +64,11 @@ const App = () => {
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/about" component={About} />
             <Route exact path="/about_app" component={AboutApp} />
-            <Route exact path="/mybudget/privacy-policy" component={Privacy} />
             <Route component={Whoops404} />
           </Switch>
         </ScrollToTop>
       </div>
       <Footer />
-      <ToastComponent />
     </React.Suspense>
   );
 };

@@ -24,18 +24,6 @@ const PostsFeed = () => {
     dispatch(getPosts());
   }, [dispatch]);
 
-  const onDeletePost = (postId) => {
-    dispatch(deletePost(postId));
-  };
-
-  const onLikeClick = ({ postId }) => {
-    dispatch(updatePostLikes({ postId, action: "like" }));
-  };
-
-  const onUnlikeClick = ({ postId }) => {
-    dispatch(updatePostLikes({ postId, action: "unlike" }));
-  };
-
   const IconText = ({ icon, text, ...props }) => (
     <Space {...props}>
       {React.createElement(icon)}
@@ -65,8 +53,8 @@ const PostsFeed = () => {
                       <IconText
                         style={{ cursor: 'pointer', color: "#ff889c" }}
                         onClick={() => !post.likers.includes(auth.user._id) ?
-                          onLikeClick({ postId: post._id }) :
-                          onUnlikeClick({ postId: post._id })}
+                          dispatch(updatePostLikes({ postId: post._id, action: "like" })) :
+                          dispatch(updatePostLikes({ postId: post._id, action: "unlike" }))}
                         disabled={updatingPostLike} text={`${post.likers.length}`}
                         icon={!post.likers.includes(auth.user._id) ? HeartOutlined : HeartFilled}
                       />,
@@ -105,7 +93,7 @@ const PostsFeed = () => {
                           <Menu.Item style={{ color: "red" }} key="3"
                             icon={<DeleteTwoTone twoToneColor="red" />}>
                             <Popconfirm
-                              onConfirm={() => onDeletePost(post._id)}
+                              onConfirm={() => dispatch(deletePost(post._id))}
                               placement="left"
                               title="Are you sure you want to delete this post"
                               okText="Yes"

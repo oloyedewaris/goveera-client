@@ -62,13 +62,13 @@ const LandingPage = () => {
           <div className='landing_list_con' >
             <div className='landing_list_subcon'>
               <div className='landing_list_dot' />
-              <div className='landing_list_item'>Communicate and make announcements without stress</div>
+              <div className='landing_list_item'>Communication without stress</div>
             </div>
             <div className='landing_list_subcon'>
               <div className='landing_list_dot' />
-              <div className='landing_list_item'>Record projects to get feedbacks and opinions</div>
+              <div className='landing_list_item'>Record projects for analytics</div>
             </div>
-            <div className='landing_list_subcon'>
+            <div className='landing_list_subcon' style={{ paddingBottom: 10 }}>
               <div className='landing_list_dot' />
               <div className='landing_list_item'>Conduct polls for quick survey</div>
             </div>
@@ -78,8 +78,10 @@ const LandingPage = () => {
       <Row className='row_con' gutter={[16, 16]}>
         <Col xs={24} sm={24} md={20} lg={16}>
           <div>
-            <h2 className='paragraphs'>Goveera leads to a transformation in work processes</h2>
-            <Button size='large' className='my_button' type='primary'><Link to='/register'>Get your account now</Link></Button>
+            <h2 className='paragraphs'>Goveera helps to improve work process with effective communication system</h2>
+            <Button size='large' className='my_button' type='primary'>
+              <Link to='/register'>Get your account now</Link>
+            </Button>
           </div>
         </Col>
         <Col xs={24} sm={24} md={20} lg={8}>

@@ -57,20 +57,6 @@ const Post = () => {
     }
   }, [projects, projectId]);
 
-  const onSupportClick = ({ projectId }) =>
-    dispatch(updateProject({ projectId, action: "support" }));
-
-  const onUnsupportClick = ({ projectId }) =>
-    dispatch(updateProject({ projectId, action: "unsupport" }));
-
-  const onOpposeClick = ({ projectId }) =>
-    dispatch(updateProject({ projectId, action: "oppose" }));
-
-  const onUnopposeClick = ({ projectId }) =>
-    dispatch(updateProject({ projectId, action: "unoppose" }));
-
-  const onModalOpen = () => setIsOpen(true);
-
   const onUpdateStage = ({ projectId }) => {
     if (projectStage) {
       setIsOpen(false);
@@ -105,8 +91,8 @@ const Post = () => {
                     <IconText
                       disabled={updatingProject}
                       onClick={() => project.supporters.includes(auth.user._id) ?
-                        onUnsupportClick({ projectId: project._id }) :
-                        onSupportClick({ projectId: project._id })}
+                        dispatch(updateProject({ projectId: project._id, action: "unsupport" })) :
+                        dispatch(updateProject({ projectId: project._id, action: "support" }))}
                       style={{ color: "green" }}
                       icon={project.supporters.includes(auth.user._id) ? LikeFilled : LikeOutlined}
                       text={`${project.supporters.length} `}
@@ -115,14 +101,14 @@ const Post = () => {
                       style={{ color: "red" }}
                       disabled={updatingProject}
                       onClick={() => project.opposers.includes(auth.user._id) ?
-                        onUnopposeClick({ projectId: project._id }) :
-                        onOpposeClick({ projectId: project._id })}
+                        dispatch(updateProject({ projectId: project._id, action: "unoppose" })) :
+                        dispatch(updateProject({ projectId: project._id, action: "oppose" }))}
                       icon={project.opposers.includes(auth.user._id) ? DislikeFilled : DislikeOutlined}
                       text={`${project.opposers.length} `}
                     />,
                     <>
                       {auth.user._id === project.initiator._id && <IconText
-                        onClick={onModalOpen}
+                        onClick={() => setIsOpen(true)}
                         icon={EditOutlined}
                       />}
                     </>

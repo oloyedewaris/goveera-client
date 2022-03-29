@@ -24,22 +24,6 @@ const PollsFeed = () => {
     dispatch(getPolls());
   }, [dispatch]);
 
-  const onDeletePoll = (pollId) => {
-    dispatch(deletePoll(pollId));
-  };
-
-  const onUpdatePoll = ({ pollId, optionName }) => {
-    dispatch(updatePoll({ pollId, optionName, action: 'vote' }));
-  };
-
-  const onLikeClick = ({ pollId }) => {
-    dispatch(updatePoll({ pollId, action: "like" }));
-  };
-
-  const onUnlikeClick = ({ pollId }) => {
-    dispatch(updatePoll({ pollId, action: "unlike" }));
-  };
-
   const calculateVote = (poll) => {
     let total = 0;
     poll.options.forEach((option) => {
@@ -86,8 +70,8 @@ const PollsFeed = () => {
                         <IconText
                           style={{ cursor: 'pointer', color: "#ff889c" }}
                           onClick={() => !poll.likers.includes(auth.user._id) ?
-                            onLikeClick({ pollId: poll._id }) :
-                            onUnlikeClick({ pollId: poll._id })}
+                            dispatch(updatePoll({ pollId: poll._id, action: "like" })) :
+                            dispatch(updatePoll({ pollId: poll._id, action: "unlike" }))}
                           disabled={updatingPoll} text={`${poll.likers.length}`}
                           icon={!poll.likers.includes(auth.user._id) ? HeartOutlined : HeartFilled}
                         />,
@@ -126,7 +110,7 @@ const PollsFeed = () => {
                             <Menu.Item style={{ color: "red" }} key="3"
                               icon={<DeleteTwoTone twoToneColor="red" />}>
                               <Popconfirm
-                                onConfirm={() => onDeletePoll(poll._id)}
+                                onConfirm={() => dispatch(deletePoll(poll._id))}
                                 placement="left"
                                 title="Are you sure you want to delete this Poll"
                                 okText="Yes"
@@ -154,10 +138,11 @@ const PollsFeed = () => {
                                     </div> :
                                     <button className="poll_names_not_voted"
                                       disabled={updatingPoll}
-                                      onClick={() => onUpdatePoll({
+                                      onClick={() => dispatch(updatePoll({
                                         pollId: poll._id,
-                                        optionName: option.optionName
-                                      })}>
+                                        optionName: option.optionName,
+                                        action: 'vote'
+                                      }))}>
                                       <h4>{option.optionName}</h4>
                                     </button>}
                                 </div>

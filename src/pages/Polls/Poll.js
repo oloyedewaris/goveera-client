@@ -46,20 +46,10 @@ const Poll = () => {
     }
   }, [polls, pollId]);
 
-  const onUpdatePoll = ({ pollId, optionName }) =>
-    dispatch(updatePoll({ pollId, optionName, action: 'vote' }));
-
-  const onLikeClick = ({ pollId }) =>
-    dispatch(updatePoll({ pollId, action: "like" }));
-
-  const onUnlikeClick = ({ pollId }) =>
-    dispatch(updatePoll({ pollId, action: "unlike" }));
-
   const onDeletePoll = (pollId) => {
     dispatch(deletePoll(pollId));
     history.push('/home?tab=poll');
   }
-
 
   const IconText = ({ icon, text, ...props }) => (
     <Space {...props}>
@@ -101,9 +91,9 @@ const Poll = () => {
                     style={{ cursor: 'pointer', color: '#ff889c' }}
                     onClick={() => {
                       if (!poll.likers.includes(auth.user._id)) {
-                        onLikeClick({ pollId: poll._id });
+                        dispatch(updatePoll({ pollId: poll._id, action: "like" }));
                       } else {
-                        onUnlikeClick({ pollId: poll._id });
+                        dispatch(updatePoll({ pollId: poll._id, action: "unlike" }));
                       }
                     }}
                     text={`${poll.likers.length}`} disabled={updatingPoll}
@@ -150,7 +140,7 @@ const Poll = () => {
                   avatar={<Avatar icon={!poll.surveyor.image && <UserOutlined />} src={poll.surveyor.image} />}
                   title={<Link to={`/profile/${poll.surveyor._id}`}>{`${poll.surveyor.firstName} ${poll.surveyor.lastName}`}</Link>}
                   description={
-                    <div className="post-in-list">
+                    <div className="poll-in-list">
                       <h4>{poll.question}</h4>
                       {poll.options.map((option) => {
                         const percentage = (option.voters.length / calculateVote(poll)) * 100;
@@ -163,10 +153,11 @@ const Poll = () => {
                                 <h5 style={{ textAlign: "center" }}>{percentage}%</h5>
                               </div> :
                               <div className="poll_names_not_voted"
-                                onClick={() => onUpdatePoll({
+                                onClick={() => dispatch(updatePoll({
                                   pollId: poll._id,
-                                  optionName: option.optionName
-                                })}>
+                                  optionName: option.optionName,
+                                  action: 'vote'
+                                }))}>
                                 <h4>{option.optionName}</h4>
                               </div>}
                           </div>
