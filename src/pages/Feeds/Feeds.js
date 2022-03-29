@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Tabs, Modal } from "antd";
 import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Create from "../../components/Create/Create"
 import PostsFeed from "./sections/PostsFeed";
 import PollsFeed from "./sections/PollsFeed";
 import ProjectsFeed from "./sections/ProjectsFeed";
@@ -16,7 +15,6 @@ const Feeds = () => {
   const user = useSelector(state => state.auth.user)
   const dispatch = useDispatch()
   const [toggle, setToggle] = useState(false)
-  const [toggleCreate, setToggleCreate] = useState(false)
 
   useEffect(() => {
     if (user?.justCreated) {
@@ -36,7 +34,7 @@ const Feeds = () => {
   const { TabPane } = Tabs;
   return (
     <div className="feeds_container">
-      <div onClick={() => setToggleCreate(!toggleCreate)}>
+      <div>
         <CreateNew />
       </div>
       <Tabs onChange={onTabChange} defaultActiveKey={location.search} >
@@ -50,9 +48,6 @@ const Feeds = () => {
           <ProjectsFeed />
         </TabPane>
       </Tabs>
-      <Modal title="Create a New Post" visible={toggleCreate} onCancel={() => setToggleCreate(false)}>
-        <Create onClose={() => setToggleCreate(false)} />
-      </Modal>
       {user?.justCreated &&
         <Modal title="Welcome to Goveera" visible={toggle} onCancel={closeModal}>
           <p>Hurray, Welcome</p>
