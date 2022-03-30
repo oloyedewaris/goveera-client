@@ -19,13 +19,13 @@ function Footer() {
             <img className='footer_logo' src={logo} alt='logo' /> <h2 style={{ marginLeft: 10 }} >Goveera</h2>
           </div>
           <div style={{ flexDirection: 'row', marginTop: 15 }}>
-            <a href='https://facebook.com/Goveera'><FacebookOutlined style={iconStyle} /></a>
-            <a href='https://instagram.com/governance_technology'><InstagramOutlined style={iconStyle} /></a>
-            <a href='https://twitter.com/governance_tech'><TwitterOutlined style={iconStyle} /></a>
-            <a href='https://youtube.com/waris_oloyede'> <YoutubeOutlined style={iconStyle} /></a>
+            <a href='https://facebook.com/waris_oloyede.5'><FacebookOutlined style={iconStyle} /></a>
+            <a href='https://instagram.com/waris_oloyede'><InstagramOutlined style={iconStyle} /></a>
+            <a href='https://twitter.com/waris_oloyede'><TwitterOutlined style={iconStyle} /></a>
+            <a href='https://youtube.com/oloyedewaris'> <YoutubeOutlined style={iconStyle} /></a>
           </div>
           <div style={{ marginTop: 30 }}>
-            <p>governancetechnology17@gmail.com</p>
+            <p>oloyedewaris@@gmail.com</p>
             <p>+234 810 8745 769</p>
             <p>Isawo road, Ikorodu, Lagos, Nigeria</p>
           </div>
