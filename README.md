@@ -18,7 +18,5 @@ A front-end web application developed with react.js
 
 #### I intentionally reveal and use the same firebase keys as that of the project so as to synchronize existing data, i will remove and change it when about to release the app
 
-## Future integration to this app
-
 
 Enjoy...
