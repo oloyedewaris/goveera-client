@@ -30,6 +30,7 @@ const Poll = React.lazy(() => import("./pages/Polls/Poll"));
 const SavedItem = React.lazy(() => import("./pages/Saves/SavedItem"));
 const Whoops404 = React.lazy(() => import("./util/Whoops404"));
 
+
 const App = () => {
   const token = localStorage.getItem('token')
 
@@ -67,3 +68,26 @@ const App = () => {
 };
 
 export default App;
+
+
+
+// import LandingPage from "./pages/LandingPage/LandingPage"
+// import Login from "./pages/Login/Login"
+// import RegisterUser from "./pages/Register/RegisterUser"
+// import RegisterCompany from "./pages/Register/RegisterCompany"
+// import Discover from "./pages/Discover/Discover"
+// import MyColleagues from "./pages/Discover/Colleagues"
+// import Profile from "./pages/Profile/Profile"
+// import Create from "./components/Create/Create"
+// import Footer from "./components/Footer/Footer"
+// import Contact from "./components/Details/Contact"
+// import About from "./components/Details/About"
+// import AboutApp from "./components/Details/AboutApp"
+// import Settings from "./pages/Settings/Settings"
+// import Notifications from "./pages/Notifications/Notifications"
+// import Feeds from "./pages/Feeds/Feeds"
+// import Post from "./pages/Posts/Post"
+// import Project from "./pages/Projects/Project"
+// import Poll from "./pages/Polls/Poll"
+// import SavedItem from "./pages/Saves/SavedItem"
+// import Whoops404 from "./util/Whoops404"
