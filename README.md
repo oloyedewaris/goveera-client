@@ -6,6 +6,10 @@ A front-end web application developed with react.js
 
 ### [Live Demo](https://goveera-client.pages.dev "Goveera")
 
+#### [Backend repository](https://github.com/oloyedewaris/goveera-server "Goveera")
+
+#### [Mobile repository](https://github.com/oloyedewaris/goveera-mobile "Goveera")
+
 ### How to run this app locally
 
 - Ensure to have node.js installed on your computer
