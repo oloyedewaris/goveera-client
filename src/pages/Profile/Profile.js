@@ -80,8 +80,8 @@ const Profile = () => {
                 <Button style={{ marginLeft: '5px' }} className="profile_pic" onClick={() => setToggle(true)} >Profile picture</Button>
               </div>
             }
+            <Button style={{ margin: '10px 15px', float: 'right' }}><Link to="/discover">Discover Users</Link></Button>
           </Card>
-          <Button style={{ margin: '10px 15px', float: 'right' }}><Link to="/discover">Discover Users</Link></Button>
           <ProfileFeeds user={user} />
         </div>}
       <ToastComponent />

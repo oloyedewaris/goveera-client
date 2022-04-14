@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List, Skeleton, Button, Modal } from "antd";
+import { List, Skeleton, Button, Modal, Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../util/axiosInstance";
 import Post from './sections/Post/Post';
@@ -190,6 +190,7 @@ const PostsFeed = () => {
           <div className="posts-list">
             {allPosts.length > 0 ? (
               <div>
+                <Divider orientation="left">Feeds</Divider>
                 <List
                   itemLayout="vertical"
                   dataSource={allPosts}
