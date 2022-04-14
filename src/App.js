@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Navbar from "./components/NavBar/Navbar";
-import Spinner from "./components/Spinner/Spinner";
 import large from "./hoc/largeScreenWrapper";
 import auth from "./hoc/auth";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
@@ -9,33 +8,33 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.less';
 
 //pages
-const LandingPage = React.lazy(() => import("./pages/LandingPage/LandingPage"));
-const Login = React.lazy(() => import("./pages/Login/Login"));
-const RegisterUser = React.lazy(() => import("./pages/Register/RegisterUser"));
-const RegisterCompany = React.lazy(() => import("./pages/Register/RegisterCompany"));
-const Discover = React.lazy(() => import("./pages/Discover/Discover"));
-const MyColleagues = React.lazy(() => import("./pages/Discover/Colleagues"));
-const Profile = React.lazy(() => import("./pages/Profile/Profile"));
-const Create = React.lazy(() => import("./components/Create/Create"));
-const Footer = React.lazy(() => import("./components/Footer/Footer"));
-const Contact = React.lazy(() => import("./components/Details/Contact"));
-const About = React.lazy(() => import("./components/Details/About"));
-const AboutApp = React.lazy(() => import("./components/Details/AboutApp"));
-const Settings = React.lazy(() => import("./pages/Settings/Settings"));
-const Notifications = React.lazy(() => import("./pages/Notifications/Notifications"));
-const Feeds = React.lazy(() => import("./pages/Feeds/Feeds"));
-const Post = React.lazy(() => import("./pages/Posts/Post"));
-const Project = React.lazy(() => import("./pages/Projects/Project"));
-const Poll = React.lazy(() => import("./pages/Polls/Poll"));
-const SavedItem = React.lazy(() => import("./pages/Saves/SavedItem"));
-const Whoops404 = React.lazy(() => import("./util/Whoops404"));
+import LandingPage from "./pages/LandingPage/LandingPage";
+import Login from "./pages/Login/Login";
+import RegisterUser from "./pages/Register/RegisterUser";
+import RegisterCompany from "./pages/Register/RegisterCompany";
+import Discover from "./pages/Discover/Discover";
+import MyColleagues from "./pages/Discover/Colleagues";
+import Profile from "./pages/Profile/Profile";
+import Create from "./components/Create/Create";
+import Footer from "./components/Footer/Footer";
+import Contact from "./components/Details/Contact";
+import About from "./components/Details/About";
+import AboutApp from "./components/Details/AboutApp";
+import Settings from "./pages/Settings/Settings";
+import Notifications from "./pages/Notifications/Notifications";
+import Feeds from "./pages/Feeds/Feeds";
+import Post from "./pages/Posts/Post";
+import Project from "./pages/Projects/Project";
+import Poll from "./pages/Polls/Poll";
+import SavedItem from "./pages/Saves/SavedItem";
+import Whoops404 from "./util/Whoops404";
 
 
 const App = () => {
   const token = localStorage.getItem('token')
 
   return (
-    <React.Suspense fallback={<Spinner />}>
+    <>
       <Navbar />
       <div className='below_nav'>
         <ScrollToTop>
@@ -63,31 +62,8 @@ const App = () => {
         </ScrollToTop>
       </div>
       <Footer />
-    </React.Suspense>
+    </>
   );
 };
 
 export default App;
-
-
-
-// import LandingPage from "./pages/LandingPage/LandingPage"
-// import Login from "./pages/Login/Login"
-// import RegisterUser from "./pages/Register/RegisterUser"
-// import RegisterCompany from "./pages/Register/RegisterCompany"
-// import Discover from "./pages/Discover/Discover"
-// import MyColleagues from "./pages/Discover/Colleagues"
-// import Profile from "./pages/Profile/Profile"
-// import Create from "./components/Create/Create"
-// import Footer from "./components/Footer/Footer"
-// import Contact from "./components/Details/Contact"
-// import About from "./components/Details/About"
-// import AboutApp from "./components/Details/AboutApp"
-// import Settings from "./pages/Settings/Settings"
-// import Notifications from "./pages/Notifications/Notifications"
-// import Feeds from "./pages/Feeds/Feeds"
-// import Post from "./pages/Posts/Post"
-// import Project from "./pages/Projects/Project"
-// import Poll from "./pages/Polls/Poll"
-// import SavedItem from "./pages/Saves/SavedItem"
-// import Whoops404 from "./util/Whoops404"

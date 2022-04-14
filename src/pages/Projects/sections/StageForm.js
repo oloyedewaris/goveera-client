@@ -19,7 +19,7 @@ const StageForm = ({ setProjectStage, onUpdateStage }) => {
           <Option value="Closure">Closure</Option>
         </Select>
       </Form.Item>
-      <Button type="primary" onClick={onUpdateStage}>Update Project Stage</Button>
+      <Button type="primary" onClick={onUpdateStage}>Update</Button>
     </Form>
   )
 }

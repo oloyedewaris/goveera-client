@@ -1,12 +1,12 @@
 import React from 'react'
 import { Avatar, Input, Modal } from "antd";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { DatabaseOutlined, ProjectOutlined, FormOutlined, UserOutlined } from '@ant-design/icons';
-import Create from "../../components/Create/Create"
-import { createPost, resetCreated } from "../../redux/actions/postActions";
+import Create from "../../../components/Create/Create";
+import axiosInstance from '../../../util/axiosInstance';
+import toastInstance from '../../../util/toastInstance';
 
-function CreateNew() {
-  const dispatch = useDispatch()
+function CreateNew({ setRefreshFeeds }) {
   const auth = useSelector(state => state.auth)
   const [toggle, setToggle] = React.useState(false)
   const [inputError, setInputError] = React.useState(null)
@@ -21,9 +21,17 @@ function CreateNew() {
     if (e.key === 'Enter') {
       if (text !== "") {
         const newPost = { text, isAnnouncement: false };
-        dispatch(createPost(newPost));
-        dispatch(resetCreated())
-        setText("");
+        axiosInstance
+          .post("/api/posts", newPost)
+          .then(res => {
+            if (res.data.success) {
+              setRefreshFeeds(true)
+              setText("");
+            }
+          })
+          .catch(err => {
+            toastInstance("Couldn't create post", true)
+          });
       } else {
         setInputError("Please enter a text to post");
       }
@@ -44,7 +52,7 @@ function CreateNew() {
         </div>
       </div>
       <Modal title="Create a New Post" visible={toggle} onCancel={() => setToggle(false)}>
-        <Create onClose={() => setToggle(false)} />
+        <Create setRefreshFeeds={setRefreshFeeds} onClose={() => setToggle(false)} />
       </Modal>
     </>
   )

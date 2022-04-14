@@ -1,33 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Alert, Button, Input, Form } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
-import { createPoll, resetCreated } from "../../../redux/actions/pollActions";
 import Spinner from "../../Spinner/Spinner";
-import { useHistory } from "react-router-dom";
+import axiosInstance from "../../../util/axiosInstance";
+import toastInstance from "../../../util/toastInstance";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 
-const CreatePoll = ({ onClose }) => {
-  const dispatch = useDispatch();
-  const history = useHistory()
-  const pollCreating = useSelector(state => state.poll.pollCreating);
-  const pollCreated = useSelector(state => state.poll.pollCreated);
+const CreatePoll = ({ onClose, setRefreshFeeds }) => {
+  const [creating, setCreating] = useState(false);
   const [error, setError] = useState(null);
   const [options, setOptions] = useState([]);
   const [optionName, setOptionName] = useState("");
   const [question, setQuestion] = useState("");
-
-  useEffect(() => {
-    if (pollCreated) {
-      setQuestion("");
-      setOptions([]);
-
-      onClose();
-    }
-    return () => {
-      dispatch(resetCreated())
-      // history.push('/home?tab=poll')
-    }
-  }, [pollCreated, onClose, dispatch, history])
 
   const onQuestionChange = e => {
     setError(null);
@@ -41,7 +25,7 @@ const CreatePoll = ({ onClose }) => {
 
   const addOptions = () => {
     setError(null);
-    if (optionName !== "") {
+    if (optionName) {
       const newOption = {
         optionName,
         voters: []
@@ -62,14 +46,29 @@ const CreatePoll = ({ onClose }) => {
   const onCreatePoll = () => {
     if (question === "") {
       setError("Please enter a question");
-    } else if (options && options.length === 0) {
+    } else if (options?.length < 0) {
       setError("Please add at least one option");
     } else {
       const newPoll = {
         question,
         options
       };
-      dispatch(createPoll(newPoll));
+      setCreating(true)
+      axiosInstance
+        .post("/api/polls", newPoll)
+        .then(res => {
+          setCreating(false)
+          if (res.data.success) {
+            setQuestion("");
+            setOptions([]);
+            setRefreshFeeds(true);
+            onClose();
+          }
+        })
+        .catch(err => {
+          setCreating(false)
+          toastInstance("Couldn't create poll, try again", true)
+        });
     }
   };
 
@@ -77,7 +76,7 @@ const CreatePoll = ({ onClose }) => {
     <div className="create_post">
       <h3>Create A New Poll</h3>
       {error && <Alert type="error" message={error} />}
-      {pollCreating && <Spinner />}
+      {creating && <Spinner />}
       <Form className="poll_input_container">
         <Input
           value={question}
@@ -100,7 +99,7 @@ const CreatePoll = ({ onClose }) => {
           <Button type="primary" onClick={onCreatePoll}>Create</Button>
         </div>
       </Form>
-
+      <ToastComponent />
     </div>
   );
 };

@@ -1,19 +1,16 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateProject } from "../../../redux/actions/projectActions";
+import { useSelector } from "react-redux";
 import { Table, Tag, Button } from "antd";
 
-const TaskTable = ({ project }) => {
-  const dispatch = useDispatch();
+const TaskTable = ({ project, updateProject }) => {
   const user = useSelector(state => state.auth.user);
 
   const completeTask = taskName => {
     const body = {
       taskName,
       action: "updateTask",
-      projectId: project._id
     }
-    dispatch(updateProject(body))
+    updateProject(body);
   }
 
   const dataSource = project.tasks.map((task, i) => ({

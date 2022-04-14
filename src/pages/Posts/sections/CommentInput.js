@@ -1,56 +1,29 @@
 import React, { useState } from "react";
-import { Input, Space, Alert } from "antd";
-import { useDispatch } from "react-redux";
-import { addComment } from "../../../redux/actions/postActions";
+import { Input, Space } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
-const CommentInput = ({ postData }) => {
-  const [Comment, setComment] = useState("");
-  const [Error, setError] = useState(null);
+const CommentInput = ({ post, addComment }) => {
+  const [text, setText] = useState({ body: '', error: null });
 
-  const dispatch = useDispatch();
-
-  const { userId, commentId } = postData;
-
-  const onInputChange = e => {
-    setComment(e.target.value);
-    setError(null);
-  };
-
-  const onAddComment = (postId, action, commenterId, text) => {
-    if (Comment !== "") {
-      dispatch(addComment(postId, action, commenterId, text));
-    } else {
-      setError("Please enter a text to comment");
-    }
-    setComment("");
+  const onAddComment = () => {
+    if (text) {
+      addComment(text.body);
+      setText({ body: '', error: null });
+    } else setText({ body: '', error: 'Enter comment' });
   };
 
   return (
-    <div>
-      {Error ? (
-        <Alert
-          className="alert"
-          message={Error > 50 ? "Internal Server Error" : Error}
-          type="error"
-          showIcon
-          closable
-        />
-      ) : null}
-      <Space direction="vertical">
-        <Search
-          value={Comment}
-          placeholder="Enter a comment"
-          onChange={onInputChange}
-          size="large"
-          enterButton={<SendOutlined />}
-          onSearch={() =>
-            onAddComment(commentId, "addComment", userId, Comment)
-          }
-        />
-      </Space>
-    </div>
+    <Space direction="vertical">
+      <Search
+        value={text.body}
+        placeholder="Enter a comment"
+        onChange={e => setText({ body: e.target.value, error: null })}
+        size="large"
+        enterButton={<SendOutlined />}
+        onSearch={onAddComment}
+      />
+    </Space>
   );
 };
 

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from 'react-router-dom'
 import { Alert, Button, Input, Form, Checkbox } from "antd";
-import { createPost, resetCreated } from "../../../redux/actions/postActions";
 import Spinner from "../../Spinner/Spinner";
+import axiosInstance from "../../../util/axiosInstance";
+import toastInstance from "../../../util/toastInstance";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 
-function CreatePosts({ onClose }) {
-  const dispatch = useDispatch();
-  const history = useHistory()
-  const postCreating = useSelector(state => state.post.postCreating);
-  const postCreated = useSelector(state => state.post.postCreated);
+function CreatePosts({ onClose, setRefreshFeeds }) {
+  const [creating, setCreating] = useState(false);
   const [error, setError] = useState(null);
   const [text, setText] = useState("");
   const [isAnnouncement, setAnnouncement] = useState(false)
@@ -18,37 +15,39 @@ function CreatePosts({ onClose }) {
     setAnnouncement(false)
   }, [])
 
-  useEffect(() => {
-    if (postCreated) {
-      onClose();
-    }
-    return () => {
-      dispatch(resetCreated())
-      setAnnouncement(false)
-      // history.push('/home?tab=post')
-    }
-  }, [postCreated, onClose, dispatch, history])
-
   const onInputChange = e => {
     setError(null);
     setText(e.target.value);
   };
 
   const onCreatePost = () => {
-    if (text !== "") {
+    if (text) {
       const newPost = { text, isAnnouncement };
-      dispatch(createPost(newPost));
+      setCreating(true)
+      axiosInstance
+        .post("/api/posts", newPost)
+        .then(res => {
+          setCreating(false)
+          if (res.data.success) {
+            setRefreshFeeds(true)
+            setText("");
+            onClose()
+          }
+        })
+        .catch(err => {
+          setCreating(false)
+          toastInstance("Couldn't create post, try again", true)
+        });
     } else {
       setError("Please enter a text to post");
     }
-    setText("");
   };
 
   return (
     <div className="create_post">
       <h3>Create A New Topic</h3>
       {error && <Alert type="error" message={error} />}
-      {postCreating && <Spinner />}
+      {creating && <Spinner />}
       <Form className="post_input_container">
         <Input.TextArea value={text}
           className="post_input"
@@ -65,6 +64,7 @@ function CreatePosts({ onClose }) {
           <Button className='button' size="medium" type="primary" onClick={onCreatePost}>Post</Button>
         </div>
       </Form>
+      <ToastComponent />
     </div >
   );
 }
