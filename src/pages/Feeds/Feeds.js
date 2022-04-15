@@ -189,7 +189,7 @@ const PostsFeed = () => {
         ) : (
           <div className="posts-list">
             {allPosts.length > 0 ? (
-              <div>
+              <div style={{ margin: '10px auto' }}>
                 <Divider orientation="left">Feeds</Divider>
                 <List
                   itemLayout="vertical"

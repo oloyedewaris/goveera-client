@@ -147,8 +147,8 @@ const ProfileFeeds = () => {
       ) : (
         <div className="posts-list">
           {allPosts.length > 0 ? (
-            <div>
-              <Divider orientation="left">Feeds</Divider>
+            <div style={{ margin: '10px auto' }}>
+              <Divider orientation="left">Personal Feeds</Divider>
               <List
                 itemLayout="vertical"
                 dataSource={allPosts}
