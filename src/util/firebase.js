@@ -15,4 +15,4 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig)
 export const storage = getStorage(app)
 const analytics = getAnalytics(app)
-console.log('analytics', analytics)
+console.log(analytics)

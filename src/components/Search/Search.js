@@ -28,8 +28,7 @@ const Search = () => {
         setOptions(users)
       })
       .catch(err => {
-        toastInstance("Can't search user")
-        console.log(err)
+        toastInstance("Can't search user", true)
       })
   };
 

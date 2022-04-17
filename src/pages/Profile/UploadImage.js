@@ -29,7 +29,6 @@ const UploadImage = ({ onClose }) => {
   const handleImageAsFile = (e) => {
     const image = e.target.files[0]
     setImageLoading(true)
-    console.log(image)
     if (!image) {
       setImageLoading(false)
       return
@@ -45,7 +44,6 @@ const UploadImage = ({ onClose }) => {
       err => {
         setError('An error occurred while uploading image, try again')
         setImageLoading(false)
-        console.log('err', err)
       },
       () => {
         setImageLoading(false)

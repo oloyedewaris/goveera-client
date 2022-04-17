@@ -23,10 +23,9 @@ const CreateProject = ({ onClose, setRefreshFeeds }) => {
   const addTasks = () => {
     if (!task.body) {
       setForm(form => ({ ...form, task: { body: '', error: 'Please enter task name' } }))
-    } else if (tasks.includes(task)) {
-      setForm(form => ({ ...form, task: { body: '', error: 'Enter a different task name' } }))
+    } else if (tasks.includes(task.body)) {
+      setForm(form => ({ ...form, task: { body: '', error: 'Enter a different task' } }))
     } else {
-      console.log(tasks)
       setTasks([...tasks, task.body])
       setForm(form => ({ ...form, task: { body: '', error: null } }))
     }

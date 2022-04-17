@@ -1,14 +1,8 @@
 import { combineReducers } from "redux";
 import errorReducer from "./errorReducer";
 import authReducer from "./authReducer";
-import postReducer from "./postReducer";
-import pollReducer from "./pollReducer";
-import projectReducer from "./projectReducer";
 
 export default combineReducers({
   error: errorReducer,
   auth: authReducer,
-  post: postReducer,
-  poll: pollReducer,
-  project: projectReducer,
 });

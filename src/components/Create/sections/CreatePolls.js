@@ -26,14 +26,14 @@ const CreatePoll = ({ onClose, setRefreshFeeds }) => {
   const addOptions = () => {
     setError(null);
     if (optionName) {
-      const newOption = {
-        optionName,
-        voters: []
-      };
-      setOptions([...options, newOption]);
-      setOptionName("");
+      if (options.includes(optionName)) {
+        setError("Enter a different option");
+      } else {
+        setOptions([...options, optionName]);
+        setOptionName("");
+      }
     } else {
-      setError("Please enter option name");
+      setError("Please enter option");
     }
   };
 
@@ -61,6 +61,8 @@ const CreatePoll = ({ onClose, setRefreshFeeds }) => {
           if (res.data.success) {
             setQuestion("");
             setOptions([]);
+            setOptionName('');
+            setError(null);
             setRefreshFeeds(true);
             onClose();
           }
@@ -91,7 +93,7 @@ const CreatePoll = ({ onClose, setRefreshFeeds }) => {
         />
         {options.map((option, i) => (
           <h3 className="map_list" key={Math.random()}>
-            {option.optionName} <DeleteTwoTone twoToneColor="red" onClick={() => removePoll(i)} className="delete_from_list" />
+            {option} <DeleteTwoTone twoToneColor="red" onClick={() => removePoll(i)} className="delete_from_list" />
           </h3>
         ))}
         <div className="poll_button_container">

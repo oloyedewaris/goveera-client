@@ -72,7 +72,6 @@ const Poll = () => {
   };
 
   const deleteComment = commentId => {
-    console.log(commentId)
     setUpdatingPoll(true)
     axiosInstance
       .patch(`/api/polls/${pollId}`, { action: 'deleteComment', commentId })
