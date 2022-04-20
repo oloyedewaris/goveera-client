@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { List, Skeleton, Button, Divider } from "antd";
-import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom';
 import axiosInstance from "../../util/axiosInstance";
 import Post from '../Feeds/sections/Post/Post';
 import Poll from '../Feeds/sections/Post/Poll';
@@ -9,8 +9,7 @@ import toastInstance from '../../util/toastInstance';
 import ToastComponent from '../../components/ToastComponent/ToastComponent';
 
 const ProfileFeeds = () => {
-  const user = useSelector(state => state.auth.user)
-
+  const userId = useParams().id
   const [loading, setLoading] = useState(true);
   const [allPosts, setAllPosts] = useState([])
   const [updating, setUpdating] = useState(false)
@@ -21,7 +20,7 @@ const ProfileFeeds = () => {
   useEffect(() => {
     setLoading(true)
     axiosInstance
-      .get(`/api/users/posts/${user._id}?limit=8`)
+      .get(`/api/users/posts/${userId}?limit=8`)
       .then(res => {
         setAllPosts(res.data.allPosts)
         setCount(res.data.count)
@@ -31,7 +30,7 @@ const ProfileFeeds = () => {
         toastInstance("Couldn't get user's feeds", true)
         setLoading(false)
       });
-  }, [user._id]);
+  }, [userId]);
 
   const updatePost = ({ postId, action }) => {
     setUpdating(true)
@@ -129,7 +128,7 @@ const ProfileFeeds = () => {
     setLimit(limit + 4)
     setLoadingMore(true)
     axiosInstance
-      .get(`/api/users/posts/${user._id}?limit=${limit + 4}`)
+      .get(`/api/users/posts/${userId}?limit=${limit + 4}`)
       .then(res => {
         setAllPosts(res.data.allPosts)
         setLoadingMore(false)
