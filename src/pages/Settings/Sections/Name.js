@@ -44,9 +44,12 @@ function Name({ toggleModal }) {
       type: "dataChange"
     };
 
-    dispatch(changeSettings(newUpdate)(() => {
-      toggleModal(false)
-      toastInstance('Settings updated')
+    dispatch(changeSettings({
+      data: newUpdate,
+      callback: () => {
+        toggleModal(false)
+        toastInstance('Settings updated')
+      }
     }));
     setError(null);
   };

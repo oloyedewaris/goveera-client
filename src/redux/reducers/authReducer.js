@@ -10,12 +10,14 @@ import {
   REGISTER_COMPANY_FAILED,
   CLEAR_NOTIFICATIONS,
   SAVE_ITEM,
-  CLEAR_JUST_CREATED
+  CLEAR_JUST_CREATED,
+  SET_IS_AUTHENTICATING
 } from "../actions/types";
 
 const initialState = {
   token: null,
   isAuthenticated: false,
+  isAuthenticating: false,
   user: null,
 };
 
@@ -87,6 +89,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload
+      };
+    case SET_IS_AUTHENTICATING:
+      return {
+        ...state,
+        isAuthenticating: action.payload
       };
     default:
       return state;

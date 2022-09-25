@@ -10,7 +10,8 @@ import {
   REGISTER_COMPANY_FAILED,
   CLEAR_NOTIFICATIONS,
   SAVE_ITEM,
-  CLEAR_JUST_CREATED
+  CLEAR_JUST_CREATED,
+  SET_IS_AUTHENTICATING
 } from "./types";
 import axios from 'axios';
 import axiosInstance from "../../util/axiosInstance";
@@ -114,7 +115,7 @@ export const registerCompany = body => dispatch => {
 };
 
 //clear notifications
-export const clearNotifications = (callBack) => (dispatch, getState) => {
+export const clearNotifications = (callBack) => dispatch => {
   axiosInstance
     .get("/api/users/clear_notifications")
     .then((res) => {
@@ -146,7 +147,7 @@ export const saveItem = data => callBack => dispatch => {
 }
 
 // Change settings
-export const changeSettings = data => callBack => dispatch => {
+export const changeSettings = ({data, callback}) => dispatch => {
   const { userId, bio, email, firstName, lastName, password, newPassword, type, profilePic } = data
   const body = { bio, email, firstName, lastName, password, newPassword, profilePic }
 
@@ -157,7 +158,7 @@ export const changeSettings = data => callBack => dispatch => {
         type: CHANGE_SETTINGS,
         payload: res.data,
       });
-      callBack()
+      callback()
     })
     .catch((err) => {
       dispatch(
@@ -170,8 +171,15 @@ export const changeSettings = data => callBack => dispatch => {
     });
 };
 
-export const logout = () => {
-  return {
+export const logout = () => dispatch => {
+  dispatch({
     type: LOGOUT_SUCCESS,
-  };
+  });
+};
+
+export const setIsAuthenticating = bool => dispatch => {
+  dispatch({
+    type: SET_IS_AUTHENTICATING,
+    payload: bool,
+  });
 };

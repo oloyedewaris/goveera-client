@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
-import { setUser } from "../redux/actions/authActions";
+import { setUser, setIsAuthenticating } from "../redux/actions/authActions";
 import Spinner from "../components/Spinner/Spinner";
 import axiosInstance from "../util/axiosInstance";
 
@@ -16,16 +16,19 @@ function Auth(Component) {
     useEffect(() => {
       if (!isAuthenticated && token) {
         setLoading(true)
+        dispatch(setIsAuthenticating(true))
         axiosInstance.get("/api/auth/authenticate")
           .then(res => {
             if (res.data) {
               setLoading(val => {
                 if (res.data) dispatch(setUser(res.data))
+                dispatch(setIsAuthenticating(false))
                 return false
               })
             }
           }).catch(err => {
             localStorage.removeItem('token')
+            dispatch(setIsAuthenticating(false))
             setLoading(false)
           })
       } else setLoading(false)

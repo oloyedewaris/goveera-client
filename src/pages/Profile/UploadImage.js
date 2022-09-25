@@ -63,10 +63,13 @@ const UploadImage = ({ onClose }) => {
       profilePic: imageUrl,
       password
     }
-    dispatch(changeSettings(data)(() => {
-      setImageUrl(null)
-      toastInstance('Image Uploaded')
-      onClose()
+    dispatch(changeSettings({
+      data,
+      callback: () => {
+        setImageUrl(null)
+        toastInstance('Image Uploaded')
+        onClose()
+      }
     }))
   }
 

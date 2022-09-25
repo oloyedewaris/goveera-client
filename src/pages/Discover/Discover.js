@@ -51,7 +51,7 @@ const Discover = () => {
                     <Card className="center_card_discover" hoverable>
                       <p><Avatar icon={!user.image && <UserOutlined />} className="center-avatar" size={70} src={user.image} /></p>
                       <Meta title={truncString(`${user.firstName} ${user.lastName}`, 12)} description={truncString(user.email, 12)} />
-                      <p style={{ marginTop: '5px auto' }}>{truncString(user.position, 15)}</p>
+                      <p style={{ marginTop: '5px', fontWeight: '600' }}>{truncString(`${user.position} at ${user.company.name}`, 30)}</p>
                     </Card>
                   </Link>
                 </Col>

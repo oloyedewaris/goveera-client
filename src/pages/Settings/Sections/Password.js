@@ -43,9 +43,12 @@ function Password({ toggleModal }) {
       type: "passwordChange"
     };
     if (NewPassword === ConfirmPassword) {
-      dispatch(changeSettings(newUpdate)(() => {
-        toggleModal(false)
-        toastInstance('Settings Updated')
+      dispatch(changeSettings({
+        data: newUpdate,
+        callback: () => {
+          toggleModal(false)
+          toastInstance('Settings Updated')
+        }
       }));
       setError(null);
     } else {
